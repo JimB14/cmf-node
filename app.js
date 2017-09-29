@@ -5,6 +5,7 @@ const ejs                   = require('ejs');
 const mongoose              = require('mongoose');
 const bodyParser            = require('body-parser');
 const expressSanitizer      = require('express-sanitizer');
+const expressValidator      = require('express-validator');
 const methodOverride        = require('method-override');
 const flash                 = require('connect-flash'); // above passport
 const filter                = require('leo-profanity');
@@ -81,6 +82,7 @@ app.use(fileUpload());
 app.use(flash()); // above passport configuration
 // must be BELOW use bodyParser
 app.use(expressSanitizer());
+app.use(expressValidator()); // https://www.npmjs.com/package/express-validator
 
 
 // PASSPORT CONFIGURATION (order critical for proper functionality!)

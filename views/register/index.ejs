@@ -7,17 +7,21 @@
       <div class="col-md-8 col-sm-8 col-xs-10" style="float:none; margin: 0 auto;">
          <h1><%= title %></h1>
 
+         <% include ../partials/errors %>
+
          <form method="post" action="/register" class="form-container">
             <div class="form-group">
                <label for="username">Email</label>
                <input type="email" class="form-control" name="username"
                   id="username" placeholder="Email - becomes your username to log in"
+                  value="<%= (typeof errors === 'undefined') ? '' : user.username %>"
                   autofocus>
             </div>
             <div class="form-group">
                <label for="name">Name</label>
                <input type="text" class="form-control" name="name"
-                  id="name" placeholder="How your name will display in comments you post" >
+                  id="name" placeholder="How your name will display in comments you post"
+                  value="<%= (typeof errors === 'undefined') ? '' : user.name %>">
             </div>
             <div class="form-group">
                <label for="password">Password<small> (at least 6 characters)</label>
