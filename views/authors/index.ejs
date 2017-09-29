@@ -1,0 +1,42 @@
+<% include ../partials/header %>
+
+<div class="container">
+   <h1><%- pagetitle %></h1>
+
+   <!-- row expands margins-->
+   <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+      <div class="col-md-8">
+         <% articles.forEach( (article) => { %>
+            <div class="col-md-6 col-sm-6">
+               <div class="thumbnail authors">
+                  <a href="/articles/<%= article._id %>">
+                     <img class="img-responsive" src="/images/uploaded_images/<%= article.thumbImage %>">
+                  </a>
+                  <div  class="caption">
+                     <p>By <%= article.author.name %></p>
+                     <p class="date-createdAt"><%= article.createdAt %></p>
+                     <h4>
+                        <a href="/articles/<%= article._id %>">
+                           <%= article.title %>
+                        </a>
+                     </h4>
+                     <p><%- article.body.substring(0,100) %></p>
+                  </div>
+                  <p>
+                     <a class="btn btn-primary" href="/articles/<%= article._id %>">
+                        Read more
+                     </a>
+                  </p>
+               </div>
+            </div>
+         <% }) %>
+      </div>
+
+      <div class="col-md-4">
+         Right side margin
+      </div>
+   </div>
+
+</div>
+
+<% include ../partials/footer %>

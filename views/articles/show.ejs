@@ -1,0 +1,113 @@
+<% include ../partials/header %>
+
+<div class="container">
+   <div class="show-date">
+      <p><%= today %></p>
+   </div>
+   <h1 class="show-article-title"><%= article.title %></h1>
+    <div class="row">
+
+         <div class="col-md-9">
+            <div class="thumbnail">
+               <img class="img-responsive"
+                  src="/images/uploaded_images/<%= article.showImage %>">
+               <div  class="caption-full">
+                  <div class="show-article-body">
+                     <h3><%= article.title %></h3>
+                     <div class="show-author-name">
+                        <p>
+                           <a href="/articles/authors/<%= article.author.id %>">
+                              by <span class="text-uppercase"><%= article.author.name %></span>
+                           </a>
+                           &nbsp;| &nbsp;
+                           <span><%= article.createdAt_virtual %></span>
+                           <!-- <% if(article.updatedAt != null ){ %>
+                              &nbsp;| &nbsp;
+                              <span><%= article.updatedAt_virtual %> (edit)</span>
+                           <% } %> -->
+                        </p>
+                     </div>
+                     <p><%- article.body %></p>
+                  </div>
+                  <% if(currentUser && article.author.id.equals(currentUser._id)) { %>
+                     <div class="show-edit-delete">
+                        <a class="btn btn-warning" href="/articles/<%= article._id %>/edit" title="Edit">
+                           <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <form method="post" action="/articles/<%= article._id %>?_method=DELETE">
+                           <button class="btn btn-danger">
+                              <span class="glyphicon glyphicon-trash" title="Delete"></span>
+                           </button>
+                        </form>
+                     </div>
+                  <% } %>
+
+               </div>
+            </div>
+
+            <% if(article.comments.length < 1){ %>
+               <p>
+                  <a class="btn btn-success" href="/articles/<%= article._id %>/comments/new">
+                     Be the first to comment
+                  </a>
+               </p>
+            <% } else { %>
+               <div class="well fbf7f3">
+                  <p class="text-right">
+                     <a class="btn btn-success" href="/articles/<%= article._id %>/comments/new">
+                        Add Comment
+                     </a>
+                     <hr>
+                  </p>
+                  <% article.comments.forEach(function(comment){ %>
+                     <div class="row">
+                        <div class="col-md-12">
+                           <strong><%= comment.author.name %></strong>
+                           <span class="pull-right"><%= article.createdAt %></span>
+                           <div class="comment-text-container">
+                              <p>
+                                 <%= comment.text %>
+                              </p>
+                              <div class="border-dotted"></div>
+                           </div>
+
+                           <% if(currentUser && comment.author.id.equals(currentUser._id)) { %><!-- every route has currentUser;-->
+                              <div class="show-edit-delete">
+                                 <a class="btn btn-warning"
+                                    href="/articles/<%= article._id %>/comments/<%= comment._id %>/edit" title="Edit comment">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                 </a>
+                                 <form method="post" action="/articles/<%= article._id %>/comments/<%= comment._id %>?_method=DELETE">
+                                    <button class="btn btn-danger">
+                                       <span class="glyphicon glyphicon-trash" title="Delete comment"></span>
+                                    </button>
+                                 </form>
+                              </div>
+                           <% } %>
+                        </div>
+                     </div>
+                  <% }); %>
+               </div>
+            <% } %>
+        </div>
+
+        <div class="col-md-3">
+            <p class="lead">Authors</hp>
+            <div class="list-group">
+                <a href="#" class="list-group-item">
+                    Info 1
+                </a>
+                <a href="#" class="list-group-item">
+                    Info 2
+                </a>
+                <a href="#" class="list-group-item">
+                    Info 3
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div><!-- // container -->
+
+
+<% include ../partials/footer %>

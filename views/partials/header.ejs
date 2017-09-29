@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>Blog</title>
+   <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+   <link rel="stylesheet" href="/css/styles.css">
+   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+   <!-- foala text editor -->
+   <!-- Include external CSS. -->
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
+   <!-- Include Editor style. -->
+   <link rel="stylesheet" href="/css/froala_editor.pkgd.2.6.6.css">
+   <link rel="stylesheet" href="/css/froala_style.2.6.6.css">
+   <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.6.6/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.6.6/css/froala_style.min.css" rel="stylesheet" type="text/css" /> -->
+   <!-- end froala -->
+</head>
+<body>
+   <nav class="navbar navbar-default">
+      <div class="container-fluid">
+         <!-- Brand and toggle get grouped for better mobile display -->
+         <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#blog-menu" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">
+               <img src="/images/logo_250x117.png" alt="Challenge My Faith">
+            </a>
+         </div>
+
+         <!-- Collect the nav links, forms, and other content for toggling -->
+         <div class="collapse navbar-collapse" id="blog-menu">
+            <ul class="nav navbar-nav">
+               <li><a href="/articles">Articles</a></li>
+               <li><a href="/about">About</a></li>
+               <li><a href="/contact">Contact</a></li>
+               <% if(currentUser && currentUser.isAuthor){ %>
+                  <li><a href="/articles/new">New Article</a></li>
+               <% } %>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+               <% if(!currentUser) { %>
+                     <li><a href="/login">Log In</a></li>
+                     <li><a href="/register">Register</a></li>
+               <% } else { %>
+                     <li>
+                        <a href="#" title="user name">
+                           <span class="glyphicon glyphicon-user"></span>
+                           <%= currentUser.name %>
+                        </a>
+                     </li>
+                     <li><a href="/logout">Log Out</a></li>
+               <% } %>
+            </ul>
+         </div>
+      </div>
+   </nav>
+
+
+<!-- - - - - - - Error & Success Messages - - - - - - - - - -->
+<div class="container text-center mt01em">
+   <div class="col-md-12" style="float:none; margin: 0 auto;">
+      <% if(error && error.length > 0){ %>
+         <div class="alert alert-danger" role="alert">
+           <%- error %>
+         </div>
+      <% } %>
+      <% if(success && success.length > 0){ %>
+         <div class="alert alert-success" role="alert">
+           <%- success %>
+         </div>
+      <% } %>
+   </div>
+</div>

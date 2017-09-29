@@ -1,0 +1,48 @@
+<footer class="footer text-center">
+   <p >&copy;<% var today = new Date(); %> <%= today.getFullYear(); %> Challenge My Faith</p>
+   <p>
+      <a href="/">Home</a>
+      &nbsp; | &nbsp; <a href="/articles">Articles</a>
+      &nbsp; | &nbsp; <a href="/about">About</a>
+      &nbsp; | &nbsp; <a href="/contact">Contact</a>
+      &nbsp; | &nbsp; <a href="/contact/article-submission">Submit Article</a>
+      &nbsp; | &nbsp; <a href="/terms">Terms</a>
+   </p>
+</footer>
+
+   <!-- JavaScript - jquery.js must be above bootstrap.js -->
+   <script src="/bower_components/jquery/dist/jquery.js"></script>
+   <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+   <script src=/js/functions.js></script>
+   <!-- start froala -->
+   <!-- Include external JS libs. -->
+   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
+   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script>
+   <!-- Include Editor JS files. -->
+   <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.6.6/js/froala_editor.pkgd.min.js"></script> -->
+   <script src="/js/froala_editor.min.2.6.6.js"></script>
+   <script src="/js/froala_editor.pkgd.min.2.6.6.js"></script>
+   <!-- Initialize the editor. -->
+   <!-- <script> $(function() { $('textarea').froalaEditor() }); </script> -->
+   <!-- end froala -->
+   <script>
+   $(document).ready(function(){
+
+      // $(function(){
+      //    $('div.froala-editor').froalaEditor({
+      //       height: 350
+      //    });
+      // });
+
+      $(function(){
+         $('.froala-editor').froalaEditor({
+            height: 450
+         });
+      });
+
+
+   });
+   </script>
+   </body>
+</html>

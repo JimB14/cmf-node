@@ -1,0 +1,27 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-8 col-sm-8 col-xs-10" style="float:none; margin: 0 auto;">
+            <h2>Add comment about <em><%= article.title %></em></h2>
+
+            <form method="POST" action="/articles/<%= article._id %>/comments"
+                  class='form-container'>
+                <div class="form-group">
+                    <label for="body">Comment</label>
+                    <textarea class="form-control" name="comment[text]" id="text" placeholder="Comment" rows="5" autofocus></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">
+                       Submit
+                    </button>
+                </div>
+            </form>
+            <a href="/articles">View articles</a>
+        </div>
+
+    </div>
+</div>
+
+<% include ../partials/footer %>

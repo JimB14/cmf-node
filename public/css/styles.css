@@ -1,0 +1,264 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+   margin: 0px;
+   padding: 0px;
+   background-color: #fcfcfc;
+   font-family: 'Raleway', sans-serif;
+   font-size: 14px;
+   line-height: 1.9em;
+   margin-bottom:  120px; /* must equal footer height*/
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 120px; /* must match body margin-bottom */
+  background-color: #222;
+  padding: 30px 0px;
+  margin-top: 30px;
+}
+/* end sticky footer styles
+-------------------------------------------------- */
+
+.footer a:hover {
+   color: #fff;
+   cursor: pointer;
+}
+.footer,
+.footer a {
+   color: #fff;
+}
+
+
+/*!
+ * IE10 viewport hack for Surface/desktop Windows 8 bug
+ * Copyright 2014-2015 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+/*
+ * See the Getting Started docs for more information:
+ * http://getbootstrap.com/getting-started/#support-ie10-width
+ */
+@-ms-viewport     { width: device-width; }
+@-o-viewport      { width: device-width; }
+@viewport         { width: device-width; }
+
+.asterisk {
+   font-size: 1.3em;
+   font-weight: 700;
+}
+.color-blue {
+   color: #0000ff;
+}
+.mb01em {margin-bottom: 1em;}
+.mb02em {margin-bottom: 2em;}
+.mb03em {margin-bottom: 3em;}
+.mb04em {margin-bottom: 4em;}
+.mb05em {margin-bottom: 5em;}
+.mt01em {margin-top: 1em;}
+.mt02em {margin-top: 2em;}
+.mt03em {margin-top: 3em;}
+.mt04em {margin-top: 4em;}
+.mt05em {margin-top: 5em;}
+
+p {
+
+}
+
+.quoted-author {
+   margin-left: 20px;
+   margin-top: -15px;
+}
+.quoted-author span {
+   font-size: .8em;
+}
+.thumbnail {
+   line-height: 1.9em;
+}
+.thumbnail img {
+    width: 100%;
+}
+.thumbnail {
+    padding: 0px;
+}
+.thumbnail .caption-full {
+    padding: 9px;
+}
+.show-edit-delete {
+    margin-top: 20px;
+}
+.show-edit-delete form {
+    display: inline;
+}
+
+.form-container {
+   padding: 30px;
+   border: 1px solid #ddd;
+   border-radius: 4px;
+}
+.navbar {
+   margin: 0px;
+   border-bottom: 3px solid #BE824B;
+   background-color: #fbf7f3;
+}
+.navbar, .navbar-nav {
+   padding: 0px;
+   height:86px;
+}
+
+.navbar-nav li a {
+   color: #222;  /* #BE824B !important; */
+   padding: 0px;
+   padding-right: 15px;
+   line-height: 86px;
+   font-size: 1.3em;
+   font-weight: 700;
+}
+.navbar-brand {
+   padding: 0px;
+}
+.navbar-brand img {
+   padding: 0px;
+   padding-right: 30px;
+   padding-left: 15px;
+   height: 90px;
+}
+
+.header {
+   margin: 0px;
+   width: 100%;
+   background-color: #fcfcfc;
+   padding: 10px 0px;
+   text-align: center;
+   margin-bottom: 0px;
+}
+.header h1 {
+   margin: 0px;
+   font-size: 3em;
+}
+
+.index-articles-page {
+   min-height: 196px;
+   max-height: 196px;
+}
+
+.comment-text-container {
+   margin-bottom: 20px;
+}
+.border-dotted {
+   border-top: 1px dotted #ddd;
+   margin-right: 5%;
+   margin-left: 5%;
+}
+
+/* background color for comments @views/articles/show */
+.show-article-body {
+   padding: 0px 20px;
+   line-height: 2.2em;
+}
+.show-article-body p {
+   margin-bottom: 30px;
+}
+.show-author-name {
+   margin-left: 5px;
+}
+.show-author-name p {
+   margin-bottom: -20px;
+}
+
+.show-article-title {
+   margin: 0 0 24px;
+   font-size: 48px;
+   font-weight: 500;
+   line-height: 1.25;
+   letter-spacing: -.6px;
+}
+.show-date p {
+   font-size: 1.4em;
+   color: #666666;
+   margin-bottom: 20px;
+}
+.fbf7f3 {
+   background-color: #fbf7f3;
+}
+
+/*  Authors header color @views/articles/show */
+.e8d1ba {
+   background-color: #e8d1ba;
+}
+
+.list-group-item {
+   border: 1px solid #e8d1ba;
+}
+
+/* views/login/index */
+.login-forgot-password {
+   float: right;
+   margin-right: 5px;
+}
+.login-view-articles {
+   margin-left:5px;
+}
+
+/* views/articles/new */
+.border-top-square {
+   border-top-left-radius: 0px;
+   border-top-right-radius: 0px;
+}
+
+/* froala */
+/*.fr-view {
+   height: 400px;
+   z-index: 1;
+}
+.froala-element {
+   line-height: 1.9em;
+}*/
+
+.btn-submit-post {
+   margin-top: 0px;
+   z-index: 2 !important;
+}
+
+/* views/articles/index */
+.date-createdAt {
+   margin-top:-10px;
+}
+
+.home-title, .article-title {
+   min-height:56px;
+}
+.home-body {
+   height:  84px;
+}
+.article-body {
+   height: 111px;
+}
+
+/*  views/articles/edit */
+.edit-article-image img {
+   height: 80px;
+   width: auto;
+}
+
+/* views/authors/index */
+@media(min-width: 992px){
+   .authors img {
+      max-height: 185px;
+      width: 100%;
+   }
+}
+
+@media(max-width: 990px) and (min-width: 768px) {
+   .authors img {
+      max-height: 185px;
+      width: 100%;
+   }
+}
