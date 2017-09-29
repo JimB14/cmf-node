@@ -27,7 +27,6 @@ var User    = require('./models/user');
 
 // require middleware
 var middleware = require('./middleware');
-
 var functions = require('./funcLibrary');
 
 // var seedDB  = require('./seeds.js');
