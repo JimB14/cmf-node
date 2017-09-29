@@ -248,6 +248,16 @@ p {
    width: auto;
 }
 
+/* views/register/index.ejs */
+.btn-cmf {
+   background-color: #9d6939; /*#BE824B;*/
+   color: #fff;
+}
+.btn-cmf:hover {
+   background-color: #8a5c32;
+   color: #fff;
+}
+
 /* views/authors/index */
 @media(min-width: 992px){
    .authors img {
