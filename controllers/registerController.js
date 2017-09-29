@@ -1,24 +1,19 @@
-var express     = require('express');
-var router      = express.Router();
-var passport    = require("passport");
-var nodemailer  = require('nodemailer');
-var User        = require('../models/user');
-var funcLibrary = require('../funcLibrary');
-
-var register_controller = require('../controllers/registerController');
-
-// - - - - - Authentication routes - - - - - - - - - - - - - - - - - //
-
-/* GET request - register form */
-router.get('/register', register_controller.user_create_get);
-
-/* POST request - create new user  */
-router.post('/register', register_controller.user_create_post);
+// dependencies
 
 
 
-// add new user
-router.post('/register', function(req, res){
+// display registration form
+exports.user_create_get = function(req, res, next){
+   // render form
+   res.render('register/', {
+      title: 'Register'
+   });
+}
+
+
+// handle user create on POST
+exports.user_create_post = function(req, res, next){
+   
    // sanitize data
    var username = req.sanitize(req.body.username);  // email
    var name = req.sanitize(req.body.name); // display name
@@ -105,58 +100,4 @@ router.post('/register', function(req, res){
          });
       }
    });
-});
-
-
-// add new user
-router.get('/registration/:token', function(req, res){
-
-   console.log(`Token: ${req.params.token}`);
-
-   // get user data from user collection
-   User.findOne({ token: req.params.token }, function(err, user){
-      if(err){
-         req.flash('error', 'User not found. Unable to complete registration.');
-         return res.redirect('/');
-      } else {
-         console.log(user);
-
-         // update user, set active = 1
-         // http://mongoosejs.com/docs/api.html#model_Model.findByIdAndUpdate
-         User.findByIdAndUpdate(user._id , { active: 1 }, function(err, user){
-            if(err){
-               console.log(err);
-               return req.flash('error', 'Unable to confirm registration');
-            } else {
-               req.flash('success', '<p>Congratulations! You have successfully completed your registration!</p><p>You can now log in.</p>');
-               res.redirect('/');
-            }
-         });
-      }
-   });
-});
-
-
-// show log in form
-router.get('/login', function(req, res){
-   res.render('login/');
-});
-
-
-// process log in request & authenticate user credentials using middleware
-router.post('/login', passport.authenticate("local",
-   {
-      successRedirect: "/",
-      failureRedirect: "/login"
-   }), function(req, res){
-});
-
-
-// logout (logout() destroys session)
-router.get('/logout', function(req, res){
-   req.logout();
-   req.flash('success', 'You have been logged out.');
-   res.redirect('/');
-});
-
-module.exports = router;
+}
