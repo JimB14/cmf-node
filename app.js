@@ -17,6 +17,9 @@ const passport              = require('passport');
 const LocalStrategy         = require('passport-local');
 const passportLocalMongoose = require('passport-local-mongoose');
 
+// db configurations
+var config = require('./config');
+
 // require models
 // var Article = require('./models/article');
 var User    = require('./models/user');
