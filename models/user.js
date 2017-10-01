@@ -34,12 +34,6 @@ var UserSchema = new mongoose.Schema({
       default: 0
    },
    token: String,
-   articles: [
-      {
-         type: mongoose.Schema.Types.ObjectId,
-         ref: "Article"
-      }
-   ],
    comments: [
       {
          type: mongoose.Schema.Types.ObjectId,
@@ -52,6 +46,15 @@ var UserSchema = new mongoose.Schema({
       default: Date.now
    }
 });
+
+// Virtual for article's URL
+UserSchema
+.virtual('url')
+.get(function() {
+  return '/user/' + this._id;
+});
+
+
 
 // passportLocalMongoose adds functionality to the User Model
 // https://github.com/saintedlama/passport-local-mongoose

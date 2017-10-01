@@ -79,16 +79,19 @@ middlewareObj.isArticleAuthor = function(req, res, next){
 
    if(req.isAuthenticated()){
       // find article
-      Article.findById(req.params.id, function(err, article){
+      Article.findById(req.params.id)
+      .populate('author')
+      .exec(function(err, article){
          if(err){
             console.log(err);
             req.flash('error', "Unable to find article.");
             res.redirect('/articles');
+            return;
          } else {
             // check if author ID of article matches user ID, using equals()
             // article.author.id is a mongoose object ID and req.user._id is a string
             // hence the comparison article.author.id === req.user._id fails
-            if(article.author.id.equals(req.user._id)){
+            if(article.author._id.equals(req.user._id)){
                next();
             } else {
                req.flash('error', 'Article can only be modified by its author.');

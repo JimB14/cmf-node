@@ -18,7 +18,7 @@ const passport              = require('passport');
 const LocalStrategy         = require('passport-local');
 const passportLocalMongoose = require('passport-local-mongoose');
 
-// db configurations
+// configurations
 var config = require('./config');
 
 // require models
@@ -28,7 +28,7 @@ var User    = require('./models/user');
 
 // require middleware
 var middleware = require('./middleware');
-var functions = require('./funcLibrary');
+var funcLibrary = require('./funcLibrary');
 
 // var seedDB  = require('./seeds.js');
 
@@ -182,7 +182,6 @@ app.use(main);
 // var result = functions.resizeImage('Dorie_Leo.jpg', 300);
 // console.log(result);
 // return;
-
 
 app.listen(port, function(){
    console.log(`Server running on ${port}`);

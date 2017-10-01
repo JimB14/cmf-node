@@ -2,6 +2,8 @@
 var jimp = require('jimp');
 var sizeOf = require('image-size');
 
+var config = require('../config');
+
 // create Object
 var functionsObj = {};
 
@@ -33,8 +35,8 @@ functionsObj.isEmptyObject = function(obj){
 // store in variable for use in resizeImage()
 var now = Date.now();
 // configurations
-var localPath = 'C:/xampp/htdocs/blog/public/images/uploaded_images/';
-var liveServerPath = '/images/uploaded_images/';
+var localPath      = `${config.uploadConfig.localPath}`;
+var liveServerPath = `${config.uploadConfig.livePath}`;
 
 functionsObj.createThumbImage = function(filename, width, height){
    jimp.read(localPath + filename, function(err, image){
@@ -120,6 +122,85 @@ functionsObj.createShowImage = function(filename, width, height){
 //       }
 //    });
 // }
+
+
+functionsObj.processArticleImage = function(req_files_image){
+   // The name of the input field (i.e. "image") is used to retrieve
+   // the uploaded file to move to server location (image is an object)
+   var image = req_files_image;
+
+   // Store filename in variable for naming and insertion into db
+   var filename = req_files_image.name;
+
+   // to lower case
+   filename = filename.toLowerCase();
+
+   // check file type
+   var fileExt = functionsObj.getFileExtension(filename);
+
+   // trim white space before & after
+   fileExt = fileExt.trim();
+
+   // to lower case
+   fileExt = fileExt.toLowerCase();
+
+   // console.log(`Typeof:  ${typeof(fileExt)}`);
+   // console.log(`File extension: ${fileExt}`);
+
+   // if(fileExt != 'jpg'){
+   //    console.log('File is wrong type');
+   // } else {
+   //    console.log('File might be right type');
+   // }
+   // return;
+   //
+   // if(fileExt != 'jpg' || fileExt != 'jpeg' || fileExt != 'png' || fileExt != 'gif') {
+   //    req.flash('error', 'Uploaded file is a ' + fileExt + ' file. It must be jpg, jpeg, png or gif.');
+   //    return res.redirect('/articles/new');
+   // }
+
+   // create suffix
+   var prefix = Date.now();
+
+   // rename filename to match what resizeImage will name it
+   filename = prefix + '-' + filename;
+
+   console.log(filename);
+
+   // upload configuration
+   var localPath      = `${config.uploadConfig.localPath}${filename}`;
+   var liveServerPath = `${config.uploadConfig.livePath}${filename}`;
+
+   // Use the mv() method to place the file somewhere on your server
+   image.mv(localPath, function(err) {
+      if(err){
+         req.flash('error', 'Error uploading image.');
+      } else {
+
+         // get dimensions (using image-size package)
+         var dimensions = sizeOf(localPath);
+
+         // https://nodejs.org/api/util.html#util_util_inspect_object_options
+         // console.log(util.inspect(dimensions, { showHidden: true, depth:2 }));
+
+         var imgWidth = dimensions.width;
+         var imgHeight = dimensions.height;
+
+         // console.log('========= IMAGE DIMENSIONS ==============');
+         // console.log(`imgWidth: ${imgWidth}`);
+         // console.log(`imgHeight: ${imgHeight}`);
+         // console.log('=============================');
+
+         // resize based on image dimensions
+         functionsObj.createThumbImage(filename, 300, 200);
+
+         // resize based on image dimensions
+         functionsObj.createShowImage(filename, 600, 400);
+      }
+   });
+
+   return filename;
+}
 
 
 

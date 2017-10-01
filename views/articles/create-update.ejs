@@ -1,0 +1,59 @@
+<% include ../partials/header %>
+
+<div class="container mb03em">
+   <div class="row">
+
+      <div class="col-md-10 col-sm-10 col-xs-10" style="float:none; margin: 0 auto; margin-bottom: 3em;">
+         <h2><%= title %></h2>
+
+         <% include ../partials/errors %>
+
+         <form method="post" action="" class="form-container" encType="multipart/form-data">
+            <div class="form-group">
+               <label for="title">Title</label>
+               <input
+                  class="form-control"
+                  type="text"
+                  name="title"
+                  id="title"
+                  placeholder="Title"
+                  value="<%= (typeof article === 'undefined') ? '' : article.title %>"
+                  autofocus>
+            </div>
+            <div class="form-group">
+               <label for="image"><%= (typeof article === 'undefined') ? 'Upload image' : 'Update image' %></label>
+               <input class=""
+                  type="file"
+                  name="image"
+                  id="image"
+                  onchange="getFileSize()">
+               <small><span class="asterisk">*</span>Must be jpg, jpeg, png, gif</small>
+               <p class="color-blue" id="filesize"></p>
+            </div>
+
+            <% if(typeof article != 'undefined'){ %>
+               <div class="form-group">
+                  <p class="mb-005em"><img src="/images/uploaded_images/<%= article.thumbImage %>" height="80px"></p>
+                  <small>Current image</small>
+               </div>
+            <% } %>
+
+            <div class="form-group">
+               <label for="body">Content</label>
+               <div>
+                  <textarea class="form-control border-top-square froala-editor" name="body"><%= (typeof article === 'undefined') ? '' : article.body %></textarea>
+               </div>
+            </div>
+            <div class="form-group">
+               <button type="submit" class="btn btn-cmf btn-lg btn-block">
+                  Submit
+               </button>
+            </div>
+         </form>
+      </div>
+
+   </div>
+</div>
+
+
+<% include ../partials/footer %>

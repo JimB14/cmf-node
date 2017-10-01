@@ -1,6 +1,12 @@
 // dependencies
 var expressValidator = require('express-validator');
+var nodemailer       = require('nodemailer');
+
+// models
 var User = require('../models/user');
+
+// function library
+var funcLibrary = require('../funcLibrary');
 
 
 
@@ -18,28 +24,32 @@ exports.user_create_post = function(req, res, next){
 
    // validate data
    req.checkBody('username', 'Email is required.').notEmpty();  // email
-   req.checkBody('name', 'First name is required.').notEmpty();
-   req.checkBody('password', 'Password of at least 6 characters required.').notEmpty().isLength({ min: 6 });
+   req.checkBody('username', 'Valid email is required.').isEmail();
+   req.checkBody('name', 'Name is required.').notEmpty();
+   req.checkBody('password', 'Password is required.').notEmpty();
+   req.checkBody('password', 'Password must be at least 6 characters').isLength({ min: 6 });
    req.checkBody('password2', 'Password confirmation is required.').notEmpty();
+   req.checkBody('password','Passwords do not match. Please try again.').equals(req.body.password2);
 
    // sanitize
    req.sanitize('username').escape();
+   req.sanitize('name').escape();
    req.sanitize('password').escape();
    req.sanitize('password2').escape();
 
    // trim
    req.sanitize('username').trim();
+   req.sanitize('name').trim();
    req.sanitize('password').trim();
    req.sanitize('password2').trim();
-
-   // check if passwords match
-   req.checkBody('password','Passwords do not match. Please try again.').equals(req.body.password2);
 
    // check for errors
    var errors = req.validationErrors();
 
    // generate token
    var token = funcLibrary.randomString(72);
+
+   console.log(token);
 
    // create new user
    var user = new User({
@@ -66,13 +76,13 @@ exports.user_create_post = function(req, res, next){
          } else {
             console.log(`New USER: ${user}`);
 
-            // - - - nodemailer - - - - - - - - - - - - - - - - - - - - - - - - //
+            // - - - nodemailer - - - - - - - - - - - - - - - - - - - - - - - //
             // send email to user verify account with link
             const output = `
                <h2>Challenge My Faith</h2>
                <h3>Account Validation</h3>
                <p>Thanks ${user.name} for registering!</p>
-               <p>To validate your account <a href="https://cmf-node.herokuapp.com/registration/${token}">click here.</a></p>
+               <p>To validate your account <a href="http://localhost:3050/registration/${token}">click here.</a></p>
                <p>If you have received this message in error or did not register, please delete.</p>
                <p style="color: #666;">End of message.</p>`;
 
@@ -122,4 +132,33 @@ exports.user_create_post = function(req, res, next){
          }
       });
    }
+}
+
+
+
+exports.user_activation_get = function(req, res, next){
+
+   console.log(`Token: ${req.params.token}`);
+
+   // get user data from user collection
+   User.findOne({ token: req.params.token }, function(err, user){
+      if(err){
+         req.flash('error', 'User not found. Unable to complete registration.');
+         return res.redirect('/');
+      } else {
+         console.log(user);
+
+         // update user, set active = 1
+         // http://mongoosejs.com/docs/api.html#model_Model.findByIdAndUpdate
+         User.findByIdAndUpdate(user._id, { active: 1 }, function(err, user){
+            if(err){
+               console.log(err);
+               return req.flash('error', 'Unable to confirm registration');
+            } else {
+               req.flash('success', '<p>Congratulations! You have successfully completed your registration!</p><p>You can now Log In.</p>');
+               res.redirect('/');
+            }
+         });
+      }
+   });
 }

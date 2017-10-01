@@ -9,7 +9,7 @@
       <% articles.forEach( (article) => { %>
          <div class="col-md-6 col-sm-6 col-xs-6">
             <div class="thumbnail">
-               <a href="/articles/<%= article._id %>">
+               <a href="<%= article.url %>">
                <img class="img-responsive"
                   src="/images/uploaded_images/<%= article.thumbImage %>">
                </a>
@@ -20,7 +20,7 @@
                   <p><%= article.createdAt_virtual %></p>
                   <div class="article-title">
                      <h4>
-                        <a href="/articles/<%= article._id %>">
+                        <a href="<%= article.url %>">
                            <% if(article.title.length > 65) { %>
                               <%= article.title.substring(0,65) %>...
                            <% } else { %>
@@ -40,7 +40,7 @@
                   </div>
                </div>
                <p>
-                  <a class="btn btn-primary" href="/articles/<%= article._id %>">
+                  <a class="btn btn-primary" href="<%= article.url %>">
                      Read more
                   </a>
                </p>

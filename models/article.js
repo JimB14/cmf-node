@@ -1,55 +1,54 @@
 var mongoose = require('mongoose');
 var moment = require('moment');
 
+var Schema = mongoose.Schema;
+
 
 // create new Schema object
 var articleSchema = new mongoose.Schema({
-   title:
-   {
+   title: {
+      type: String,
+      require: true
+   },
+   author: {
+      type: Schema.Types.ObjectId,
+      ref: "User",    // model being referred to with ObjectId
+      require: true
+   },
+   image: {
       type: String
    },
-   author:
-   {
-      id:
-      {
-         type: mongoose.Schema.Types.ObjectId,
-         ref: "User"    // model being referred to with ObjectId
-      },
-      username: String, // email address
-      name: String      // what displays
-   },
-   image:
-   {
+   thumbImage:{
       type: String
    },
-   thumbImage:
-   {
+   showImage: {
       type: String
    },
-   showImage:
-   {
-      type: String
-   },
-   body:
-   {
-      type: String
+   body:{
+      type: String,
+      require: true
    },
    comments: [
       {
-         type: mongoose.Schema.Types.ObjectId,
+         type: Schema.Types.ObjectId,
          ref: "Comment"
       }
    ],
-   createdAt:
-   {
+   createdAt: {
       type: Date,
       default: Date.now
    },
-   updatedAt:
-   {
+   updatedAt: {
       type: Date,
       default: Date.now
    }
+});
+
+// Virtual for article's URL
+articleSchema
+.virtual('url')
+.get(function() {
+  return '/article/' + this._id;
 });
 
 // virtual for createdAt date

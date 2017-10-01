@@ -1,16 +1,13 @@
 var mongoose = require("mongoose");
 
+var Schema = mongoose.Schema;
+
 var commentSchema = new mongoose.Schema({
    text: String,
    author:
    {
-      id:
-      {
-         type: mongoose.Schema.Types.ObjectId,
-         ref: "User"    // model being referred to with ObjectId
-      },
-      username: String, // email address
-      name: String      // what displays
+      type: Schema.Types.ObjectId,
+      ref: "User"    // model being referred to with ObjectId
    },
    createdAt: {
       type: Date,

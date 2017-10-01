@@ -21,20 +21,16 @@
                            </a>
                            &nbsp;| &nbsp;
                            <span><%= article.createdAt_virtual %></span>
-                           <!-- <% if(article.updatedAt != null ){ %>
-                              &nbsp;| &nbsp;
-                              <span><%= article.updatedAt_virtual %> (edit)</span>
-                           <% } %> -->
                         </p>
                      </div>
                      <p><%- article.body %></p>
                   </div>
-                  <% if(currentUser && article.author.id.equals(currentUser._id)) { %>
+                  <% if(currentUser && article.author._id.equals(currentUser._id)) { %>
                      <div class="show-edit-delete">
-                        <a class="btn btn-warning" href="/articles/<%= article._id %>/edit" title="Edit">
+                        <a class="btn btn-warning" href="<%= article.url %>/update" title="Edit">
                            <span class="glyphicon glyphicon-pencil"></span>
                         </a>
-                        <form method="post" action="/articles/<%= article._id %>?_method=DELETE">
+                        <form method="post" action="<%= article.url %>/delete">
                            <button class="btn btn-danger">
                               <span class="glyphicon glyphicon-trash" title="Delete"></span>
                            </button>

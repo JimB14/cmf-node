@@ -13,7 +13,7 @@ getFileSize = function() {
          document.getElementById('filesize').innerHTML =
          'File size in KB is: <b>' + parseFloat((fsize / 1024)).toFixed(1) + '</b> KB (max = 2,000 KB)' +
          '<br>File size in MB is: <b>' + parseFloat((fsize / 1024000)).toFixed(1) + '</b> MB (max = 2 MB)';
-         document.getElementById('imageSize').value(fsize);
+         // document.getElementById('imageSize').value(fsize);
       }
    }
 }

@@ -12,7 +12,7 @@
          <form method="post" action="/register" class="form-container">
             <div class="form-group">
                <label for="username">Email</label>
-               <input type="email" class="form-control" name="username"
+               <input type="text" class="form-control" name="username"
                   id="username" placeholder="Email - becomes your username to log in"
                   value="<%= (typeof errors === 'undefined') ? '' : user.username %>"
                   autofocus>
