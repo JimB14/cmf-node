@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var expressValidator = require('express-validator');
 var filter = require('leo-profanity');
 var Article = require('../models/article');
 var Comment = require('../models/comment');
@@ -32,22 +33,25 @@ router.post('/articles/:id/comments', middleware.isLoggedIn, function(req, res){
             res.redirect(`/articles/${req.params.id}`);
          } else {
             // santize data
-            req.body.comment.text = req.sanitize(req.body.comment.text);
+            // req.body.comment.text = req.sanitize(req.body.comment.text);
 
             // apply profanity filter
-            req.body.comment.text = filter.clean(req.body.comment.text);
+            // req.body.comment.text = filter.clean(req.body.comment.text);
 
             // create new document in comments collection via Comment model
             Comment.create(req.body.comment, function(err, comment){
                if(err){
                   console.log(err);
                } else {
-                  // console.log(`New comment's author's name is: ${req.user}`);
+                  console.log(`New comment's author's name is: ${req.user.name}`);
+                  console.log(`New comment's author's id is: ${req.user._id}`);
+
 
                   // add more data: logged in user's ID & name to new comment document
                   comment.author.id = req.user._id;
                   comment.author.username = req.user.username;
                   comment.author.name = req.user.name;
+                  comment.article = req.params.id;
 
                   // save comment (document) to comments collection
                   comment.save();
@@ -59,7 +63,7 @@ router.post('/articles/:id/comments', middleware.isLoggedIn, function(req, res){
                   article.save();
 
                   // redirect user to article using SHOW route
-                  res.redirect(`/articles/${req.params.id}`);
+                  res.redirect(`/article/${req.params.id}`);
                }
             });
          }

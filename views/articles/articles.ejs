@@ -1,7 +1,7 @@
 <% include ../partials/header %>
 
 <div class="container">
-   <h1><%= pagetitle %></h1>
+   <h1><%= title %></h1>
 
    <!-- row expands margins-->
    <div class="row text-center" style="display:flex; flex-wrap: wrap;">
@@ -14,7 +14,7 @@
                   src="/images/uploaded_images/<%= article.thumbImage %>">
                </a>
                <div class="caption">
-                  <a href="/articles/authors/<%= article.author.id %>">
+                  <a href="/articles/author/<%= article.author.id %>">
                      by <span class="text-uppercase"><%= article.author.name %></span>
                   </a>
                   <p><%= article.createdAt_virtual %></p>

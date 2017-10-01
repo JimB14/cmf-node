@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 
 
 // create new Schema object
-var articleSchema = new mongoose.Schema({
+var articleSchema = new Schema({
    title: {
       type: String,
       require: true

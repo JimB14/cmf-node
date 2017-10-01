@@ -1,14 +1,17 @@
 // dependencies
 var expressValidator = require('express-validator');
-var nodemailer       = require('nodemailer');
+var async = require('async');
+var nodemailer = require('nodemailer');
 var moment = require('moment');
 var util   =  require('util');
 var sizeOf = require('image-size');
 var multer = require('multer');
+var filter = require('leo-profanity');
 
 // models
 var Article = require('../models/article');
-var User = require('../models/user');
+var Comment = require('../models/comment');
+var User    = require('../models/user');
 
 // libraries
 var funcLibrary = require('../funcLibrary');
@@ -24,6 +27,7 @@ exports.index = function(req, res, next){
    Article.find({})
    .sort({ createdAt: -1 })
    .populate('author')
+   .populate('comments')
    .exec(function(err, articles){
       // check user status
       if(req.user){
@@ -37,7 +41,7 @@ exports.index = function(req, res, next){
          return next(err);
       } else {
          res.render('articles/index', {
-            pageTitle: 'Home',
+            title: 'Home',
             articles: articles
          });
       }
@@ -51,12 +55,13 @@ exports.articles_get = function(req, res, next){
    Article.find({})
    .sort({ createdAt: -1 })
    .populate('author')
+   .populate('comments')
    .exec(function(err, articles){
       if(err){
          console.log(err);
       } else {
          res.render('articles/articles', {
-            pagetitle: 'Articles',
+            title: 'Articles',
             articles: articles
          });
       }
@@ -85,9 +90,9 @@ exports.article_create_post = function(req, res, next){
 
    // create new article
    var article = new Article({
-      title: req.body.title,
-      image: req.body.image,
-      body: req.body.body,
+      title:  req.body.title,
+      image:  req.body.image,
+      body:   req.body.body,
       author: req.user._id
    });
 
@@ -165,8 +170,8 @@ exports.article_create_post = function(req, res, next){
 exports.article_show_details = function(req, res, next){
 
    Article.findById(req.params.id)
-   .populate('author')
    .populate('comments')
+   .populate('author')
    .exec(function(err, article){
       if(err){
          console.log(err);
@@ -287,4 +292,120 @@ exports.article_update_post = function(req, res, next){
          });
       }
    }
+}
+
+
+
+// display form to delete article
+exports.article_delete_get = function(req, res, next){
+
+   // to delete an article, you must delete comments also
+
+   // sanitize & trim param
+   req.sanitize('id').escape();
+   req.sanitize('id').trim();
+
+   // retrieve article and comment data
+   async.parallel({
+
+      article: function(callback){
+         Article.findById(req.params.id)
+         .populate('author')
+         .populate('comments')
+         .exec(callback);
+      },
+      comments: function(callback){
+         Comment.find({ article: req.params.id })
+         .exec(callback);
+      },
+      comment_count: function(callback){
+         Comment.count({ article: req.params.id })
+         .exec(callback);
+      },
+   }, function(err, results){
+      if(err){
+         console.log(err);
+         req.flash('error', 'Unable to retrieve article and/or comments.');
+         return;
+      } else {
+         // success, render delete form
+         res.render('articles/delete', {
+            title: 'Delete Article: ',
+            article: results.article,
+            comments: results.comments,
+            comment_count: results.comment_count
+         });
+      }
+   });
+}
+
+
+
+// delete article & any comments
+exports.article_delete_post = function(req, res, next){
+
+   // validate hidden input data
+   req.checkBody('articleid', 'Article ID is required').notEmpty();
+
+   // remove article
+   Article.findByIdAndRemove(req.params.id, function deleteArticle(err){
+      if(err){
+         console.log(err);
+         req.flash('error', 'Unable to delete article or comments.');
+         res.redirect(`/article/${req.params.id}`);
+         return;
+      }
+   });
+
+   // remove comments for this article
+   Comment.remove({ article: req.params.id}, function(err){
+      if(err){
+         console.log(err);
+         req.flash('error', 'Unable to delete comments.');
+         return;
+      } else {
+         req.flash('success', 'Article & comments successfully deleted!');
+         res.redirect('/');
+      }
+   });
+}
+
+
+
+// retrieve artices for specific author
+exports.articles_author_get = function(req, res, next){
+
+   // sanitize & trim param
+   req.sanitize('id').escape();
+   req.sanitize('id').trim();
+
+   async.parallel({
+
+      // get user data
+      user: function(callback){
+         User.findById(req.params.id)
+         .exec(callback);
+      },
+      // get articles by author ID
+      articles: function(callback){
+         Article.find({author: req.params.id})
+         .populate('authors')
+         .populate('comments')
+         .sort( {createdAt: -1} )
+         .exec(callback);
+      },
+   }, function(err, results){
+      if(err){
+         console.log(err);
+         return req.flash('error', 'Unable to retrieve articles.');
+      } else {
+         console.log(results.articles);
+         // render view
+         res.render('authors/', {
+            title: 'Articles by Author: ',
+            articles: results.articles,
+            author: results.user
+         });
+      }
+   });
 }

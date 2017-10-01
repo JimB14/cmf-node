@@ -1,0 +1,48 @@
+<% include ../partials/header %>
+
+<div class="container mb03em">
+   <div class="row">
+
+      <div class="col-md-10 col-sm-10 col-xs-10" style="float:none; margin: 0 auto; margin-bottom: 3em;">
+         <h2><%= title %> <em><%= article.title %></em></h2>
+
+         <% include ../partials/errors %>
+
+         <% if(comments.length > 0) { %>
+            <h4>
+               <br><strong>The <%= (comment_count > 0) ? comment_count : '' %> comments below will also be deleted.</strong>
+            </h4>
+
+            <div style="margin: 20px 0px 0px 20px;">
+               <h4>Comments</h4>
+
+               <ol class="comments-list">
+                     <% comments.forEach(function(comment){ %>
+                        <li>
+                           <%= comment.author.name %> - <%= comment.text %>
+                        </li>
+                     <% }); %>
+               </ol>
+
+            </div>
+
+         <% } %>
+
+            <h4>Do you really want to delete <em><%= article.title %></em>?</h4>
+
+            <form action="" method="post">
+               <div class="form-group">
+                  <input type="hidden" id="articleid" name="articleid"
+                     value="<%= article._id %>">
+               </div>
+               <div class="form-group">
+                  <button type="submit" class="btn btn-danger">Delete</button>
+               </div>
+            </form>
+
+      </div>
+
+   </div>
+</div>
+
+<% include ../partials/footer %>

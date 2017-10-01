@@ -1,17 +1,17 @@
 // dependencies
-const express               = require('express');
-const fileUpload            = require('express-fileupload');
-const ejs                   = require('ejs');
-const mongoose              = require('mongoose');
-const bodyParser            = require('body-parser');
-const expressSanitizer      = require('express-sanitizer');
-const expressValidator      = require('express-validator');
-const methodOverride        = require('method-override');
-const flash                 = require('connect-flash'); // above passport
-const filter                = require('leo-profanity');
-const moment                = require('moment');
-const jimp                  = require('jimp');
-const sizeOf                = require('image-size');
+const express           = require('express');
+const fileUpload        = require('express-fileupload');
+const ejs               = require('ejs');
+const mongoose          = require('mongoose');
+const bodyParser        = require('body-parser');
+const expressSanitizer  = require('express-sanitizer');
+const expressValidator  = require('express-validator');
+const methodOverride    = require('method-override');
+const flash             = require('connect-flash'); // above passport
+const filter            = require('leo-profanity');
+const moment            = require('moment');
+const jimp              = require('jimp');
+const sizeOf            = require('image-size');
 
 // login / authentication
 const passport              = require('passport');

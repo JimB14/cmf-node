@@ -13,6 +13,7 @@
    "author": "Jim Burns",
    "license": "ISC",
    "dependencies": {
+      "async": "^2.5.0",
       "body-parser": "^1.17.2",
       "connect-flash": "^0.1.1",
       "ejs": "^2.5.7",

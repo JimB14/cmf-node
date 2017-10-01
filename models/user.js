@@ -1,7 +1,9 @@
 var mongoose = require("mongoose");
 var passportLocalMongoose = require("passport-local-mongoose");
 
-var UserSchema = new mongoose.Schema({
+var Schema = mongoose.Schema;
+
+var UserSchema = new Schema({
    username:
    {
       type: String,
@@ -34,12 +36,6 @@ var UserSchema = new mongoose.Schema({
       default: 0
    },
    token: String,
-   comments: [
-      {
-         type: mongoose.Schema.Types.ObjectId,
-         ref: "Comment"
-      }
-   ],
    createdAt:
    {
       type: Date,

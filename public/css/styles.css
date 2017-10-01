@@ -22,6 +22,7 @@ body {
   background-color: #222;
   padding: 30px 0px;
   margin-top: 30px;
+  border-top: 2px solid #9d6939;
 }
 /* end sticky footer styles
 -------------------------------------------------- */
@@ -261,6 +262,15 @@ p {
 .btn-cmf:focus {
    background-color: #8a5c32;
    color: #fff;
+}
+
+/* views/articles/delete */
+.comments-list {
+   margin-bottom: 30px;
+}
+.comments-list li {
+   font-size: 1.1em;
+   margin-bottom: .5em;
 }
 
 /* views/authors/index */
