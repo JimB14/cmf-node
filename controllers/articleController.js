@@ -402,7 +402,7 @@ exports.articles_author_get = function(req, res, next){
          console.log(results.articles);
          // render view
          res.render('authors/', {
-            title: 'Articles by Author: ',
+            title: 'Articles by ',
             articles: results.articles,
             author: results.user
          });
