@@ -51,7 +51,7 @@ const app = express();
 // http://mongoosejs.com/docs/connections.html#use-mongo-client
 // connect to db
 // cannot use @ in password (syntax:  mongodb://<dbuser>:<dbpassword>@host:port/dbname)
-// var url = `mongodb://${config.dbConfig.username}:${config.dbConfig.password}@${config.dbConfig.host}:${config.dbConfig.port}/${config.dbConfig.dbname}`;
+// var url = `mongodb://${config.dbConfig.username}:${config.dbConfigMlab.password}@${config.dbConfig.host}:${config.dbConfig.port}/${config.dbConfig.dbname}`;
 var url = 'mongodb://localhost/cmf';
 mongoose.connect(url);
 var db = mongoose.connection;
