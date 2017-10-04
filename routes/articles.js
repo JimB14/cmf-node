@@ -1,11 +1,5 @@
 var express = require('express');
 var router = express.Router();
-// var methodOverride   = require("method-override");
-// var expressSanitizer = require("express-sanitizer");
-// var moment = require('moment');
-// var util =  require('util');
-// var sizeOf = require('image-size');
-// var multer = require('multer');
 
 // controllers
 var article_controller = require('../controllers/articleController');

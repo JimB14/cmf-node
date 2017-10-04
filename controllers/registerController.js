@@ -1,3 +1,6 @@
+// https://stackoverflow.com/questions/37247474/es6-in-jshint-jshintrc-has-esversion-but-still-getting-warning-using-atom
+/*jshint esversion: 6 */
+
 // dependencies
 var expressValidator = require('express-validator');
 var nodemailer       = require('nodemailer');
@@ -19,7 +22,7 @@ exports.user_create_get = function(req, res, next){
    res.render('register/', {
       title: 'Register'
    });
-}
+};
 
 
 // handle user create on POST
@@ -135,7 +138,7 @@ exports.user_create_post = function(req, res, next){
          }
       });
    }
-}
+};
 
 
 
@@ -164,4 +167,4 @@ exports.user_activation_get = function(req, res, next){
          });
       }
    });
-}
+};

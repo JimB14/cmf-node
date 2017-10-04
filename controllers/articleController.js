@@ -1,3 +1,6 @@
+// https://stackoverflow.com/questions/37247474/es6-in-jshint-jshintrc-has-esversion-but-still-getting-warning-using-atom
+/*jshint esversion: 6 */
+
 // dependencies
 var expressValidator = require('express-validator');
 var async = require('async');
@@ -19,15 +22,19 @@ var funcLibrary = require('../funcLibrary');
 // configurations
 var config = require('../config');
 
-
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 // display articles on home page
 exports.index = function(req, res, next){
 
+   // sort populated field: http://mongoosejs.com/docs/api.html#document_Document-populate
    Article.find({})
    .sort({ createdAt: -1 })
    .populate('author')
-   .populate('comments')
+   .populate({
+      path: 'comments',
+      options: { sort: {createdAt: -1}}
+   })
    .exec(function(err, articles){
       // check user status
       if(req.user){
@@ -48,6 +55,9 @@ exports.index = function(req, res, next){
    });
 }
 
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+
 
 // display articles on articles page
 exports.articles_get = function(req, res, next){
@@ -55,7 +65,10 @@ exports.articles_get = function(req, res, next){
    Article.find({})
    .sort({ createdAt: -1 })
    .populate('author')
-   .populate('comments')
+   .populate({
+      path: 'comments',
+      options: { sort: {createdAt: -1}}
+   })
    .exec(function(err, articles){
       if(err){
          console.log(err);
@@ -66,7 +79,10 @@ exports.articles_get = function(req, res, next){
          });
       }
    });
-}
+};
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
 
 
 // display create new article form
@@ -75,6 +91,9 @@ exports.article_create_get = function(req, res, next){
       title: 'Create New Article'
    });
 }
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
 
 
 // process new article
@@ -163,26 +182,47 @@ exports.article_create_post = function(req, res, next){
          }
       });
    }
-}
+};
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
 
 
 // SHOW route - display details of one article
 exports.article_show_details = function(req, res, next){
 
    Article.findById(req.params.id)
-   .populate('comments')
    .populate('author')
+   .populate({
+      path: 'comments',
+      options: { sort: {createdAt: -1}}
+   })
    .exec(function(err, article){
       if(err){
          console.log(err);
          return req.flash('error', 'Unable to display article.');
       } else {
+
+         // console.log('==================================');
+         // console.log(`ARTICLE: \n ${article}`);
+         // console.log('==================================');
+         // console.log(`Typeof ARTICLE: \n ${typeof article}`);
+         // console.log('==================================');
+         // console.log(`ARTICLE.COMMENTS: \n ${article.comments}`);
+         // console.log('==================================');
+         // console.log(`Typeof article.comments: \n${typeof article.comments}`);
+         // console.log('==================================');
+
+         // render view
          res.render('articles/show', {
             article: article
          });
       }
    });
-}
+};
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
 
 
 // UPDATE route - display article update form
@@ -207,6 +247,8 @@ exports.article_update_get = function(req, res, next){
       }
    });
 }
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 
 
@@ -294,6 +336,8 @@ exports.article_update_post = function(req, res, next){
    }
 }
 
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
 
 
 // display form to delete article
@@ -337,7 +381,9 @@ exports.article_delete_get = function(req, res, next){
          });
       }
    });
-}
+};
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 
 
@@ -369,6 +415,8 @@ exports.article_delete_post = function(req, res, next){
       }
    });
 }
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 
 

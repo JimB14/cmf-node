@@ -3,7 +3,6 @@ var moment = require('moment');
 
 var Schema = mongoose.Schema;
 
-
 // create new Schema object
 var articleSchema = new Schema({
    title: {

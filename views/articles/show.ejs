@@ -4,26 +4,26 @@
    <div class="show-date">
       <p><%= today %></p>
    </div>
-   <h1 class="show-article-title"><%= article.title %></h1>
+   <h1 class="show-article-title"><%= (typeof article === 'undefined' || article === null) ? '' : article.title %></h1>
     <div class="row">
 
          <div class="col-md-9">
             <div class="thumbnail">
                <img class="img-responsive"
-                  src="/images/uploaded_images/<%= article.showImage %>">
+                  src="/images/uploaded_images/<%= (typeof article === 'undefined' || article === null) ? '' : article.showImage %>">
                <div  class="caption-full">
                   <div class="show-article-body">
-                     <h3><%= article.title %></h3>
+                     <h3><%= (typeof article === 'undefined' || article === null) ? '' : article.title %></h3>
                      <div class="show-author-name">
                         <p>
-                           <a href="/articles/authors/<%= article.author.id %>">
-                              by <span class="text-uppercase"><%= article.author.name %></span>
+                           <a href="/articles/author/<%= (typeof article === 'undefined' || article === null) ? '' : article.author.id %>">
+                              by <span class="text-uppercase"><%= (typeof article === 'undefined' || article === null) ? '' : article.author.name %></span>
                            </a>
                            &nbsp;| &nbsp;
-                           <span><%= article.createdAt_virtual %></span>
+                           <span><%= (typeof article === 'undefined' || article === null) ? '' : article.createdAt_virtual %></span>
                         </p>
                      </div>
-                     <p><%- article.body %></p>
+                     <p><%- (typeof article === 'undefined' || article === null) ? '' : article.body %></p>
                   </div>
                   <% if(currentUser && article.author._id.equals(currentUser._id)) { %>
                      <div class="show-edit-delete">
@@ -39,50 +39,62 @@
                </div>
             </div>
 
-            <% if(article.comments.length < 1){ %>
+            <!-- test -->
+            <!-- <% if(typeof article.comments === 'object' && article.comments.length < 1){%>
+               <p>article.comments is an object with an array that is empty</p>
+            <%}else if(typeof article.comments === 'object' && article.comments.length > 0) {%>
+               <p>article.comments is an object with an array that has at least one comment</p>
+            <%}else{%>
+               <p>Unsure what article.comments is</p>
+            <%}%> -->
+            <!-- end test -->
+
+            <!-- if article.comments is empty, display this  -->
+            <% if(typeof article.comments === 'object' && article.comments.length < 1) { %>
                <p>
-                  <a class="btn btn-success" href="/articles/<%= article._id %>/comments/new">
+                  <a class="btn btn-success" href="/article/<%= (typeof article === 'undefined' || article === null) ? '' : article._id %>/comment/create">
                      Be the first to comment
                   </a>
                </p>
+            <!-- if article.comments is not empty, display this  -->
             <% } else { %>
                <div class="well fbf7f3">
                   <p class="text-right">
-                     <a class="btn btn-success" href="/articles/<%= article._id %>/comments/new">
+                     <a class="btn btn-success" href="/article/<%= article._id %>/comment/create">
                         Add Comment
                      </a>
                      <hr>
                   </p>
 
-                  <% article.comments.forEach(function(comment){ %>
-                     <div class="row">
-                        <div class="col-md-12">
-                           <strong><%= comment.author.name %></strong>
-                           <span class="pull-right"><%= article.createdAt_virtual %></span>
-                           <div class="comment-text-container">
-                              <p>
-                                 <%= comment.text %>
-                              </p>
-                              <div class="border-dotted"></div>
-                           </div>
-
-                           <% if(currentUser ) { %><!-- every route has currentUser;-->
-                              <div class="show-edit-delete">
-                                 <a class="btn btn-warning"
-                                    href="/articles/<%= article._id %>/comments/<%= comment._id %>/edit" title="Edit comment">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                 </a>
-                                 <form method="post" action="/articles/<%= article._id %>/comments/<%= comment._id %>?_method=DELETE">
-                                    <button class="btn btn-danger">
-                                       <span class="glyphicon glyphicon-trash" title="Delete comment"></span>
-                                    </button>
-                                 </form>
+                  <% if(article.comments != null) { %>
+                     <% article.comments.forEach(function(comment){ %>
+                        <div class="row">
+                           <div class="col-md-12">
+                              <strong><%= comment.author.name %></strong>
+                              <span class="pull-right"><%= article.createdAt_virtual %></span>
+                              <div class="comment-text-container">
+                                 <p>
+                                    <%- comment.text %>
+                                 </p>
+                                 <div class="border-dotted"></div>
                               </div>
-                           <% } %>
-                        </div>
-                     </div>
-                  <% }); %>
 
+                              <% if(currentUser ) { %><!-- every route has currentUser;-->
+                                 <div class="show-edit-delete">
+                                    <a class="btn btn-warning"
+                                       href="/article/<%= article._id %>/comment/<%= comment._id %>/update" title="Edit comment">
+                                       <span class="glyphicon glyphicon-pencil"></span>
+                                    </a>
+                                    <a class="btn btn-danger"
+                                       href="/article/<%= article._id %>/comment/<%= comment._id %>/delete" title="Delete comment">
+                                       <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+                                 </div>
+                              <% } %>
+                           </div>
+                        </div>
+                     <% }); %>
+                  <% } %>
                </div>
             <% } %>
         </div>

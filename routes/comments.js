@@ -1,120 +1,41 @@
 var express = require('express');
 var router = express.Router();
-var expressValidator = require('express-validator');
-var filter = require('leo-profanity');
+
+// controllers
+var comment_controller = require('../controllers/commentController');
+
+// models
 var Article = require('../models/article');
 var Comment = require('../models/comment');
-// require middleware
+var User = require('../models/user');
+
+// middleware
 var middleware = require('../middleware');
 
-// NEW comment
-router.get('/articles/:id/comments/new', middleware.isLoggedIn, function(req, res){
-   Article.findById(req.params.id, function(err, article){
-      if(err){
-         console.log(err);
-      } else {
-         res.render('comments/new', { article: article });
-      }
-   });
-});
+// libraries
+var funcLibrary = require('../funcLibrary');
 
 
-// CREATE comment: post comment & associate comment with article
-router.post('/articles/:id/comments', middleware.isLoggedIn, function(req, res){
-   // find article (will push comment to it below)
-   Article.findById(req.params.id, function(err, article){
-      if(err){
-         console.log(err);
-         res.redirect('/articles');
-      } else {
-         // check if data was submitted
-         if(req.body.comment.text === ''){
-            req.flash('error', 'An empty comment form was submitted. Please try again.');
-            res.redirect(`/articles/${req.params.id}`);
-         } else {
-            // santize data
-            // req.body.comment.text = req.sanitize(req.body.comment.text);
+/* GET request - CREATE route - display create comment form */
+router.get('/article/:id/comment/create', middleware.isLoggedIn, comment_controller.comment_create_get);
 
-            // apply profanity filter
-            // req.body.comment.text = filter.clean(req.body.comment.text);
+/* POST request - create comment */
+router.post('/article/:id/comment/create', middleware.isLoggedIn, comment_controller.comment_create_post);
 
-            // create new document in comments collection via Comment model
-            Comment.create(req.body.comment, function(err, comment){
-               if(err){
-                  console.log(err);
-               } else {
-                  console.log(`New comment's author's name is: ${req.user.name}`);
-                  console.log(`New comment's author's id is: ${req.user._id}`);
+/* GET request - display update comment form */
+router.get('/article/:id/comment/:comment_id/update', middleware.isCommentAuthor, comment_controller.comment_update_get);
 
+/* POST request - update comment */
+router.post('/article/:id/comment/:comment_id/update', middleware.isCommentAuthor, comment_controller.comment_update_post);
 
-                  // add more data: logged in user's ID & name to new comment document
-                  comment.author.id = req.user._id;
-                  comment.author.username = req.user.username;
-                  comment.author.name = req.user.name;
-                  comment.article = req.params.id;
+/* GET request - to delete comment */
+router.get('/article/:id/comment/:comment_id/delete', middleware.isCommentAuthor, comment_controller.comment_delete_get);
 
-                  // save comment (document) to comments collection
-                  comment.save();
-
-                  // add comment to comments attribute of article model (article.comments)
-                  article.comments.push(comment);
-
-                  // save article after adding new comment
-                  article.save();
-
-                  // redirect user to article using SHOW route
-                  res.redirect(`/article/${req.params.id}`);
-               }
-            });
-         }
-      }
-   });
-});
+/* POST request - to delete comment */
+router.post('/article/:id/comment/:comment_id/delete', middleware.isCommentAuthor, comment_controller.comment_delete_post);
 
 
 
-// EDIT route - displays edit form for one comment
-router.get("/articles/:id/comments/:comment_id/edit", middleware.isCommentAuthor, function(req, res){ // note key ":comment_id" to distinguish two IDs
-   // find article
-   Article.findById(req.params.id, function(err, article){
-      if(err){
-         res.redirect("back");
-      } else {
-         // find comment
-         Comment.findById(req.params.comment_id, function(err, comment){
-            if(err){
-               res.redirect("back");
-            } else {
-               // render view/template & pass article object and comment ID
-               res.render("comments/edit", {
-                  article: article,
-                  comment: comment
-               });
-            }
-         });
-      }
-   });
-});
-
-
-// UPDATE route - updates record in DB
-router.put("/articles/:id/comments/:comment_id", middleware.isCommentAuthor, function(req, res){
-
-   // retrieve & sanitize description field in form
-   req.body.comment.text = req.sanitize(req.body.comment.text);
-
-   // takes three parameters (ID, data, callback)
-   Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, comment){
-      if(err){
-         // req.flash("error", "Error. Unable to update comment");
-         res.send("back");
-      } else {
-         console.log(comment);
-         // req.flash("success", "Comment successfully updated!");
-         res.redirect(`/articles/${req.params.id}`);
-      }
-   });
-});
 
 
 // DESTROY route - deletes comment from DB

@@ -1,0 +1,40 @@
+<% include ../partials/header %>
+
+<div class="container mb03em">
+   <div class="row">
+
+      <div class="col-md-10 col-sm-10 col-xs-10" style="float:none; margin: 0 auto; margin-bottom: 3em;">
+         <h2><%= title %> <em><%= article.title %></em></h2>
+
+         <% include ../partials/errors %>
+
+         <div style="margin-left: 20px;">
+
+            <h3 style="margin-bottom: 20px;"><br>Do you really want to delete this comment?</h3>
+
+            <h4 style="line-height: 1.3em;"><blockquote><%- comment.text %></blockquote></h4>
+
+
+
+            <form action="" method="post">
+               <div class="form-group">
+                  <input type="hidden" id="commentid" name="commentid"
+                     value="<%= comment._id %>">
+
+                  <input type="hidden" id="articleid" name="articleid"
+                     value="<%= article._id %>">
+               </div>
+               <div class="form-group">
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                  <a style="margin-left:20px;" class="btn btn-info" onclick="window.history.back(-1)">Prev page</a>
+               </div>
+            </form>
+
+         </div>
+
+      </div>
+
+   </div>
+</div>
+
+<% include ../partials/footer %>

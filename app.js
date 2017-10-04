@@ -1,22 +1,22 @@
 // dependencies
-const express           = require('express');
-const fileUpload        = require('express-fileupload');
-const ejs               = require('ejs');
-const mongoose          = require('mongoose');
-const bodyParser        = require('body-parser');
-const expressSanitizer  = require('express-sanitizer');
-const expressValidator  = require('express-validator');
-const methodOverride    = require('method-override');
-const flash             = require('connect-flash'); // above passport
-const filter            = require('leo-profanity');
-const moment            = require('moment');
-const jimp              = require('jimp');
-const sizeOf            = require('image-size');
+var express           = require('express');
+var fileUpload        = require('express-fileupload');
+var ejs               = require('ejs');
+var mongoose          = require('mongoose');
+var bodyParser        = require('body-parser');
+var expressSanitizer  = require('express-sanitizer');
+var expressValidator  = require('express-validator');
+var methodOverride    = require('method-override');
+var flash             = require('connect-flash'); // above passport
+var filter            = require('leo-profanity');
+var moment            = require('moment');
+var jimp              = require('jimp');
+var sizeOf            = require('image-size');
 
 // login / authentication
-const passport              = require('passport');
-const LocalStrategy         = require('passport-local');
-const passportLocalMongoose = require('passport-local-mongoose');
+var passport              = require('passport');
+var LocalStrategy         = require('passport-local');
+var passportLocalMongoose = require('passport-local-mongoose');
 
 // configurations
 var config = require('./config');
@@ -117,71 +117,6 @@ app.use(comment);
 app.use(index);
 app.use(main);
 
-// Article.create({
-//    title: 'Article Six',
-//    body: 'Content of Article Six'
-// }, function(err, article){
-//    console.log(article);
-// });
-
-// Article.create({
-//    title: 'Article Nine',
-//    body: 'Content of Article Nine'
-// }, function(err, article){
-//    User.findOne({username: "Leo Burns"}, function(err, user){
-//       if(err){
-//          console.log(err);
-//       } else {
-//          user.articles.push(article);
-//          user.save(function(err, user){
-//             if(err){
-//                console.log(err);
-//             } else {
-//                console.log(user);
-//             }
-//          });
-//       }
-//    });
-// });
-
-// User.create({
-//    email: "leo@gmail.com",
-//    username: "Leo Burns",
-//    password: "123456"
-// }, function(err, user){
-//    if(err){
-//       console.log(err);
-//    } else {
-//       console.log(user);
-//    }
-// });
-
-// User.findOne({email: "leo@gmail.com"}).populate("articles").exec(function(err, user){
-//    if(err){
-//       console.log(err);
-//    } else {
-//       console.log(user);
-//    }
-// });
-
-// console.log(__dirname + 'public/images/uploaded_images/1505590809517-IMG_20140219_081437_400_Dorie_Leo.jpg');
-// console.log('C:/xampp/htdocs/blog/public/images/uploaded_images/1505590809517-IMG_20140219_081437_400_Dorie_Leo.jpg');
-// return;
-// jimp.read('C:/xampp/htdocs/blog/public/images/uploaded_images/1505590809517-IMG_20140219_081437_400_Dorie_Leo.jpg', function(err, image){
-//    if(err){
-//       console.log(err);
-//    } else {
-//       var clone = image.clone();
-//       clone.resize(300, jimp.AUTO)
-//          .quality(90)
-//          .write('C:/xampp/htdocs/blog/public/images/uploaded_images/dorie-leo-2017-300w-autoh.jpg')
-//    }
-// });
-
-// takes 2 arguments: filename & new width
-// var result = functions.resizeImage('Dorie_Leo.jpg', 300);
-// console.log(result);
-// return;
 
 app.listen(port, function(){
    console.log(`Server running on ${port}`);

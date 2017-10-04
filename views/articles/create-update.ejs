@@ -41,7 +41,8 @@
             <div class="form-group">
                <label for="body">Content</label>
                <div>
-                  <textarea class="form-control border-top-square froala-editor" name="body"><%= (typeof article === 'undefined') ? '' : article.body %></textarea>
+                  <textarea id="body" class="form-control border-top-squarec" name="body"><%= (typeof article === 'undefined') ? '' : article.body %></textarea>
+                  <script>CKEDITOR.replace('body')</script>
                </div>
             </div>
             <div class="form-group">
