@@ -4,11 +4,6 @@ var router = express.Router();
 // controllers
 var comment_controller = require('../controllers/commentController');
 
-// models
-var Article = require('../models/article');
-var Comment = require('../models/comment');
-var User = require('../models/user');
-
 // middleware
 var middleware = require('../middleware');
 
@@ -34,23 +29,6 @@ router.get('/article/:id/comment/:comment_id/delete', middleware.isCommentAuthor
 /* POST request - to delete comment */
 router.post('/article/:id/comment/:comment_id/delete', middleware.isCommentAuthor, comment_controller.comment_delete_post);
 
-
-
-
-
-// DESTROY route - deletes comment from DB
-router.delete("/articles/:id/comments/:comment_id", middleware.isCommentAuthor, function(req, res){
-   Comment.findByIdAndRemove(req.params.comment_id, function(err, result){
-      if(err){
-         console.log(err);
-         // req.flash("error", "Error. Unable to delete comment");
-         res.redirect("back");
-      } else {
-         // req.flash("success", "Comment successfully deleted!");
-         res.redirect(`/articles/${req.params.id}`);
-      }
-   });
-});
 
 
 module.exports = router;

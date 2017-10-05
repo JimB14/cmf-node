@@ -47,7 +47,7 @@ var UserSchema = new Schema({
 UserSchema
 .virtual('url')
 .get(function() {
-  return '/user/' + this._id;
+  return '/articles/author/' + this._id;
 });
 
 

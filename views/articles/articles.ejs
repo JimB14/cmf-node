@@ -4,7 +4,7 @@
    <h1><%= title %></h1>
 
    <!-- row expands margins-->
-   <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+   <div class="text-center" style="display:flex; flex-wrap: wrap;">
       <div class="col-md-8">
       <% articles.forEach( (article) => { %>
          <div class="col-md-6 col-sm-6 col-xs-6">
@@ -40,7 +40,7 @@
                   </div>
                </div>
                <p>
-                  <a class="btn btn-primary" href="<%= article.url %>">
+                  <a class="btn btn-cmf" href="<%= article.url %>">
                      Read more
                   </a>
                </p>
@@ -53,6 +53,6 @@
       </div>
    </div>
 
-</div>
+</div><!-- /container -->
 
 <% include ../partials/footer %>

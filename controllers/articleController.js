@@ -47,7 +47,7 @@ exports.index = function(req, res, next){
          console.log(err);
          return next(err);
       } else {
-         res.render('articles/index', {
+         res.render('home/', {
             title: 'Home',
             articles: articles
          });
@@ -191,34 +191,65 @@ exports.article_create_post = function(req, res, next){
 // SHOW route - display details of one article
 exports.article_show_details = function(req, res, next){
 
-   Article.findById(req.params.id)
-   .populate('author')
-   .populate({
-      path: 'comments',
-      options: { sort: {createdAt: -1}}
-   })
-   .exec(function(err, article){
-      if(err){
+   async.parallel({
+
+      article: function(callback){
+         Article.findById(req.params.id)
+         .populate('author')
+         .populate({
+            path: 'comments',
+            options: { sort: {createdAt: -1}}
+         })
+         .exec(callback);
+      },
+
+      authors: function(callback){
+         User.find({ isAuthor: true })
+         .exec(callback);
+      },
+
+   }, function(err, results){
+      if (err) {
          console.log(err);
-         return req.flash('error', 'Unable to display article.');
+         req.flash('error', 'Unable to retrieve article and authors data.');
       } else {
-
-         // console.log('==================================');
-         // console.log(`ARTICLE: \n ${article}`);
-         // console.log('==================================');
-         // console.log(`Typeof ARTICLE: \n ${typeof article}`);
-         // console.log('==================================');
-         // console.log(`ARTICLE.COMMENTS: \n ${article.comments}`);
-         // console.log('==================================');
-         // console.log(`Typeof article.comments: \n${typeof article.comments}`);
-         // console.log('==================================');
-
          // render view
          res.render('articles/show', {
-            article: article
+            article: results.article,
+            authors: results.authors
          });
       }
    });
+
+
+   // Article.findById(req.params.id)
+   // .populate('author')
+   // .populate({
+   //    path: 'comments',
+   //    options: { sort: {createdAt: -1}}
+   // })
+   // .exec(function(err, article){
+   //    if(err){
+   //       console.log(err);
+   //       return req.flash('error', 'Unable to display article.');
+   //    } else {
+   //
+   //       // console.log('==================================');
+   //       // console.log(`ARTICLE: \n ${article}`);
+   //       // console.log('==================================');
+   //       // console.log(`Typeof ARTICLE: \n ${typeof article}`);
+   //       // console.log('==================================');
+   //       // console.log(`ARTICLE.COMMENTS: \n ${article.comments}`);
+   //       // console.log('==================================');
+   //       // console.log(`Typeof article.comments: \n${typeof article.comments}`);
+   //       // console.log('==================================');
+   //
+   //       // render view
+   //       res.render('articles/show', {
+   //          article: article
+   //       });
+   //    }
+   // });
 };
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

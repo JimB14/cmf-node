@@ -1,33 +1,29 @@
-var express     = require('express');
-var router      = express.Router();
-var passport    = require("passport");
-var nodemailer  = require('nodemailer');
-var User        = require('../models/user');
+var express = require('express');
+var router  = express.Router();
+
+// controllers
+var main_controller = require('../controllers/mainController');
+
+// middleware
+var middleware = require('../middleware');
+
+// libraries
 var funcLibrary = require('../funcLibrary');
 
 // - - - - - static page routes - - - - - - - - - - - - - - - - - //
 
-// Show about page
-router.get('/about', function(req, res){
-   res.render('about/', {
-      pagetitle: 'About'
-   });
-});
+/* GET request - display about page */
+router.get('/about', main_controller.about_page_get);
 
+/* GET request - display contact page */
+router.get('/contact', main_controller.contact_page_get);
 
-// Show contact page
-router.get('/contact', function(req, res){
-   res.render('contact/', {
-      pagetitle: 'Contact'
-   });
-});
+/* GET request - display article submission page */
+router.get('/article-submission', main_controller.article_submission_page_get);
 
-// Show contact page for article submission
-router.get('/contact/article-submission', function(req, res){
-   res.render('contact/article-submission', {
-      pagetitle: 'Article Submission'
-   });
-});
+/* GET request - display terms and conditions page */
+router.get('/terms-and-conditions', main_controller.terms_page_get);
+
 
 
 module.exports = router;

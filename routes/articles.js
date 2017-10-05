@@ -4,10 +4,6 @@ var router = express.Router();
 // controllers
 var article_controller = require('../controllers/articleController');
 
-// models
-var Article = require('../models/article');
-var User = require('../models/user');
-
 // middleware
 var middleware = require('../middleware');
 
