@@ -58,7 +58,7 @@
                      <li>
                         <a href="#" title="user name">
                            <span class="glyphicon glyphicon-user"></span>
-                           <%= currentUser.name %>
+                           <%= currentUser.fullname %>
                         </a>
                      </li>
                      <li><a href="/logout">Log Out</a></li>
@@ -69,7 +69,7 @@
    </nav>
 
 
-<!-- - - - - - - Error & Success Messages - - - - - - - - - -->
+<!-- - - - - - - Error & Success Flash Messages - - - - - - - - - -->
 <div class="container text-center mt01em">
    <div class="col-md-12" style="float:none; margin: 0 auto;">
       <% if(error && error.length > 0){ %>

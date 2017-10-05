@@ -22,8 +22,16 @@ var UserSchema = new Schema({
    },
    name:
    {
-      type: String,
-      trim: true
+      first: {
+         type: String,
+         trim: true,
+         require: true
+      },
+      last: {
+         type: String,
+         trim: true,
+         require: true
+      },
    },
    isAuthor:
    {
@@ -43,11 +51,18 @@ var UserSchema = new Schema({
    }
 });
 
-// Virtual for article's URL
+// Virtual for user URL
 UserSchema
 .virtual('url')
 .get(function() {
   return '/articles/author/' + this._id;
+});
+
+// Virtual for article's URL
+UserSchema
+.virtual('fullname')
+.get(function() {
+  return this.name.first + " " + this.name.last;
 });
 
 

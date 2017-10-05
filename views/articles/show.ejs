@@ -17,7 +17,7 @@
                      <div class="show-author-name">
                         <p>
                            <a href="/articles/author/<%= (typeof article === 'undefined' || article === null) ? '' : article.author.id %>">
-                              by <span class="text-uppercase"><%= (typeof article === 'undefined' || article === null) ? '' : article.author.name %></span>
+                              by <span class="text-uppercase"><%= (typeof article === 'undefined' || article === null) ? '' : article.author.fullname %></span>
                            </a>
                            &nbsp;| &nbsp;
                            <span><%= (typeof article === 'undefined' || article === null) ? '' : article.createdAt_virtual %></span>
@@ -99,18 +99,7 @@
             <% } %>
         </div>
 
-      <div class="col-md-3">
-         <% if(typeof authors === 'object' && authors.length > 0){ %>
-            <p class="lead">Authors</hp>
-            <div class="list-group">
-               <% authors.forEach(function(author){ %>
-                  <a href="<%= author.url %>" class="list-group-item">
-                    <%= author.name %>
-                  </a>
-               <% }); %>
-            </div>
-         <% } %>
-      </div>
+      <% include ../partials/right-sidebar %>
 
    </div>
 </div><!-- // container -->

@@ -1,0 +1,12 @@
+<div class="col-md-3">
+   <% if(typeof authors === 'object' && authors.length > 0){ %>
+      <p class="lead">Authors</hp>
+      <div class="list-group">
+         <% authors.forEach(function(author){ %>
+            <a href="<%= author.url %>" class="list-group-item">
+              <%= author.name.last %>, <%= author.name.first %>
+            </a>
+         <% }); %>
+      </div>
+   <% } %>
+</div>

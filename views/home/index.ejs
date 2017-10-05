@@ -1,4 +1,5 @@
 <% include ../partials/header %>
+
 <div class="container">
    <header class="header text-center">
       <h1>Welcome to Challenge My Faith!</h1>
@@ -11,8 +12,7 @@
          </span>
       </p>
    </header>
-</div><!-- /container -->
-
+</div>
 
 <div class="container">
    <div class="show-date">
@@ -20,49 +20,52 @@
    </div>
    <!-- row expands margins -->
    <div class="text-center" style="display:flex; flex-wrap: wrap;">
-      <% articles.forEach( (article) => { %>
-         <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="thumbnail">
-               <a href="<%= article.url %>">
-                  <img class="img-responsive index-articles-page"
-                     src="/images/uploaded_images/<%= article.thumbImage %>">
-               </a>
-               <div  class="caption">
-                  <p>by
-                     <a href="/articles/author/<%= article.author.id %>">
-                        <span class="text-uppercase"><%= article.author.name %></span>
+      <!-- check if articles has length  -->
+      <% if(articles && articles.length > 0){ %>
+         <% articles.forEach(function(article){ %>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+               <div class="thumbnail">
+                  <a href="<%= article.url %>">
+                     <img class="img-responsive index-articles-page"
+                        src="/images/uploaded_images/<%= article.thumbImage %>">
+                  </a>
+                  <div  class="caption">
+                     <p>by
+                        <a href="/articles/author/<%= article.author.id %>">
+                           <span class="text-uppercase"><%= article.author.fullname %></span>
+                        </a>
+                     </p>
+                     <p class="date-createdAt"><%= article.createdAt_virtual %></p>
+                     <div class="home-title">
+                        <h4>
+                           <a href="<%= article.url %>">
+                              <% if(article.title.length > 65) { %>
+                                 <%- article.title.substring(0,65) %>...
+                              <% } else { %>
+                                 <%- article.title.substring(0,65) %>
+                              <% } %>
+                           </a>
+                        </h4>
+                     </div>
+                     <div class="home-body">
+                        <p>
+                           <% if(article.body.length > 90) { %>
+                              <%- article.body.substring(0,90) %>...
+                           <% } else { %>
+                              <%- article.body.substring(0,90) %>
+                           <% } %>
+                        </p>
+                     </div>
+                  </div>
+                  <p>
+                     <a class="btn btn-cmf" href="<%= article.url %>">
+                        Read more
                      </a>
                   </p>
-                  <p class="date-createdAt"><%= article.createdAt_virtual %></p>
-                  <div class="home-title">
-                     <h4>
-                        <a href="<%= article.url %>">
-                           <% if(article.title.length > 65) { %>
-                              <%- article.title.substring(0,65) %>...
-                           <% } else { %>
-                              <%- article.title.substring(0,65) %>
-                           <% } %>
-                        </a>
-                     </h4>
-                  </div>
-                  <div class="home-body">
-                     <p>
-                        <% if(article.body.length > 90) { %>
-                           <%- article.body.substring(0,90) %>...
-                        <% } else { %>
-                           <%- article.body.substring(0,90) %>
-                        <% } %>
-                     </p>
-                  </div>
                </div>
-               <p>
-                  <a class="btn btn-cmf" href="<%= article.url %>">
-                     Read more
-                  </a>
-               </p>
             </div>
-         </div>
-      <% }) %>
+         <% }); %>
+      <% } %>
    </div>
 
 </div><!-- /container -->

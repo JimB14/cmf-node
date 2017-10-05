@@ -5,52 +5,53 @@
 
    <!-- row expands margins-->
    <div class="text-center" style="display:flex; flex-wrap: wrap;">
-      <div class="col-md-8">
-      <% articles.forEach( (article) => { %>
-         <div class="col-md-6 col-sm-6 col-xs-6">
-            <div class="thumbnail">
-               <a href="<%= article.url %>">
-               <img class="img-responsive"
-                  src="/images/uploaded_images/<%= article.thumbImage %>">
-               </a>
-               <div class="caption">
-                  <a href="/articles/author/<%= article.author.id %>">
-                     by <span class="text-uppercase"><%= article.author.name %></span>
+      <div class="col-md-9">
+      <!-- check if articles has length  -->
+      <% if(articles && articles.length > 0){ %>
+         <% articles.forEach( (article) => { %>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+               <div class="thumbnail">
+                  <a href="<%= article.url %>">
+                  <img class="img-responsive"
+                     src="/images/uploaded_images/<%= article.thumbImage %>">
                   </a>
-                  <p><%= article.createdAt_virtual %></p>
-                  <div class="article-title">
-                     <h4>
-                        <a href="<%= article.url %>">
-                           <% if(article.title.length > 65) { %>
-                              <%= article.title.substring(0,65) %>...
+                  <div class="caption">
+                     <a href="/articles/author/<%= article.author.id %>">
+                        by <span class="text-uppercase"><%= article.author.fullname %></span>
+                     </a>
+                     <p><%= article.createdAt_virtual %></p>
+                     <div class="article-title">
+                        <h4>
+                           <a href="<%= article.url %>">
+                              <% if(article.title.length > 65) { %>
+                                 <%= article.title.substring(0,65) %>...
+                              <% } else { %>
+                                 <%= article.title.substring(0,65) %>
+                              <% } %>
+                           </a>
+                        </h4>
+                     </div>
+                     <div class="article-body">
+                        <p>
+                           <% if(article.body.length > 150) { %>
+                              <%- article.body.substring(0,150) %>...
                            <% } else { %>
-                              <%= article.title.substring(0,65) %>
+                              <%- article.body.substring(0,150) %>
                            <% } %>
-                        </a>
-                     </h4>
+                        </p>
+                     </div>
                   </div>
-                  <div class="article-body">
-                     <p>
-                        <% if(article.body.length > 150) { %>
-                           <%- article.body.substring(0,150) %>...
-                        <% } else { %>
-                           <%- article.body.substring(0,150) %>
-                        <% } %>
-                     </p>
-                  </div>
+                  <p>
+                     <a class="btn btn-cmf" href="<%= article.url %>">
+                        Read more
+                     </a>
+                  </p>
                </div>
-               <p>
-                  <a class="btn btn-cmf" href="<%= article.url %>">
-                     Read more
-                  </a>
-               </p>
             </div>
-         </div>
-      <% }) %>
+         <% }); %>
+      <% } %>
       </div>
-      <div class="col-md-4">
-         Right side margin
-      </div>
+      <% include ../partials/right-sidebar %>
    </div>
 
 </div><!-- /container -->

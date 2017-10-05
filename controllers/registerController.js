@@ -31,7 +31,8 @@ exports.user_create_post = function(req, res, next){
    // validate data
    req.checkBody('username', 'Email is required.').notEmpty();  // email
    req.checkBody('username', 'Valid email is required.').isEmail();
-   req.checkBody('name', 'Name is required.').notEmpty();
+   req.checkBody('firstname', 'First name is required.').notEmpty();
+   req.checkBody('lastname', 'Last name is required.').notEmpty();
    req.checkBody('password', 'Password is required.').notEmpty();
    req.checkBody('password', 'Password must be at least 6 characters').isLength({ min: 6 });
    req.checkBody('password2', 'Password confirmation is required.').notEmpty();
@@ -39,13 +40,15 @@ exports.user_create_post = function(req, res, next){
 
    // sanitize
    req.sanitize('username').escape();
-   req.sanitize('name').escape();
+   req.sanitize('firstname').escape();
+   req.sanitize('lastname').escape();
    req.sanitize('password').escape();
    req.sanitize('password2').escape();
 
    // trim
    req.sanitize('username').trim();
-   req.sanitize('name').trim();
+   req.sanitize('firstname').trim();
+   req.sanitize('lastname').trim();
    req.sanitize('password').trim();
    req.sanitize('password2').trim();
 
@@ -60,7 +63,8 @@ exports.user_create_post = function(req, res, next){
    // create new user
    var user = new User({
       username: req.body.username,
-      name: req.body.name,
+      'name.first': req.body.firstname,
+      'name.last': req.body.lastname,
       token: token
    });
 
@@ -78,7 +82,7 @@ exports.user_create_post = function(req, res, next){
       User.register(user, req.body.password, function(err, user){
          if(err){
             console.log(err);
-            return next(err);
+            return res.send(err.message);
          } else {
             console.log(`New USER: ${user}`);
 
@@ -87,8 +91,8 @@ exports.user_create_post = function(req, res, next){
             const output = `
                <h2>Challenge My Faith</h2>
                <h3>Account Validation</h3>
-               <p>Thanks ${user.name} for registering!</p>
-               <p>To validate your account <a href="http://challengemyfaith.com/registration/${token}">click here.</a></p>
+               <p>Thanks ${user.fullname} for registering!</p>
+               <p>To validate your account <a href="http://localhost:3050/registration/${token}">click here.</a></p>
                <p>If you have received this message in error or did not register, please delete.</p>
                <p style="color: #666;">End of message.</p>`;
 
@@ -127,7 +131,7 @@ exports.user_create_post = function(req, res, next){
                // send flash message
 
                // live server
-               req.flash('success', 'Success! Welcome ' + user.name + '! Please check your email, and click the link to complete your registration.');
+               req.flash('success', 'Success! Welcome ' + user.fullname + '! Please check your email, and click the link to complete your registration.');
 
                // local server
                // req.flash('success', 'Success! Welcome ' + user.name + '! <br><a href=/registration/' + token + '>Click here to complete your registration.</a>');

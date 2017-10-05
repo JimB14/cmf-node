@@ -36,24 +36,37 @@ exports.index = function(req, res, next){
       options: { sort: {createdAt: -1}}
    })
    .exec(function(err, articles){
+
+      // console.log('========================================');
+      // console.log(`All articles: \n${articles}`);
+      // console.log('========================================');
       // check user status
       if(req.user){
-         console.log(`Current user: ${req.user.name}, author: ${req.user.isAuthor}`);
+         console.log(`Current user: ${req.user.fullname}, author: ${req.user.isAuthor}`);
       } else {
          console.log(`Current user: ${req.user}`);
       }
+      // console.log('========================================');
 
       if(err){
          console.log(err);
          return next(err);
       } else {
+
+         // console.log(`Articles: \n${articles}`);
+         // console.log('========================================');
+         // console.log(`Typeof articles: ${typeof articles}`);
+         // console.log(`Articles count: ${articles.length}`);
+         // console.log('========================================');
+
+         // render view
          res.render('home/', {
-            title: 'Home',
+            title: 'Home ',
             articles: articles
          });
       }
    });
-}
+};
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -62,23 +75,60 @@ exports.index = function(req, res, next){
 // display articles on articles page
 exports.articles_get = function(req, res, next){
 
-   Article.find({})
-   .sort({ createdAt: -1 })
-   .populate('author')
-   .populate({
-      path: 'comments',
-      options: { sort: {createdAt: -1}}
-   })
-   .exec(function(err, articles){
+   async.parallel({
+
+      // get authors
+      authors: function(callback){
+         User.find({ isAuthor:true })
+         .sort({ 'name.last': 'ascending'})
+         .exec(callback);
+      },
+      // get articles by author ID
+      articles: function(callback){
+         Article.find({})
+         .sort({ createdAt: -1 })
+         .populate('author')
+         .populate({
+            path: 'comments',
+            options: { sort: {createdAt: -1}}
+         })
+         .sort( {createdAt: -1} )
+         .exec(callback);
+      },
+   }, function(err, results){
       if(err){
          console.log(err);
+         return req.flash('error', 'Unable to retrieve articles.');
       } else {
+         console.log(results.articles);
+         // render view
          res.render('articles/articles', {
             title: 'Articles',
-            articles: articles
+            articles: results.articles,
+            authors: results.authors
          });
       }
    });
+
+
+
+   // Article.find({})
+   // .sort({ createdAt: -1 })
+   // .populate('author')
+   // .populate({
+   //    path: 'comments',
+   //    options: { sort: {createdAt: -1}}
+   // })
+   // .exec(function(err, articles){
+   //    if(err){
+   //       console.log(err);
+   //    } else {
+   //       res.render('articles/articles', {
+   //          title: 'Articles',
+   //          articles: articles
+   //       });
+   //    }
+   // });
 };
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -90,7 +140,7 @@ exports.article_create_get = function(req, res, next){
    res.render('articles/create-update', {
       title: 'Create New Article'
    });
-}
+};
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -133,8 +183,7 @@ exports.article_create_post = function(req, res, next){
          if(err){
             console.log(err);
             req.flash('error', 'Unable to find user');
-            res.redirect('/articles/create-update');
-            return;
+            return res.redirect('/articles/create-update');
          } else {
             //  - - start image processing - - - - - - //
 
@@ -205,6 +254,7 @@ exports.article_show_details = function(req, res, next){
 
       authors: function(callback){
          User.find({ isAuthor: true })
+         .sort({ 'name.last': 'ascending' })
          .exec(callback);
       },
 
@@ -220,36 +270,6 @@ exports.article_show_details = function(req, res, next){
          });
       }
    });
-
-
-   // Article.findById(req.params.id)
-   // .populate('author')
-   // .populate({
-   //    path: 'comments',
-   //    options: { sort: {createdAt: -1}}
-   // })
-   // .exec(function(err, article){
-   //    if(err){
-   //       console.log(err);
-   //       return req.flash('error', 'Unable to display article.');
-   //    } else {
-   //
-   //       // console.log('==================================');
-   //       // console.log(`ARTICLE: \n ${article}`);
-   //       // console.log('==================================');
-   //       // console.log(`Typeof ARTICLE: \n ${typeof article}`);
-   //       // console.log('==================================');
-   //       // console.log(`ARTICLE.COMMENTS: \n ${article.comments}`);
-   //       // console.log('==================================');
-   //       // console.log(`Typeof article.comments: \n${typeof article.comments}`);
-   //       // console.log('==================================');
-   //
-   //       // render view
-   //       res.render('articles/show', {
-   //          article: article
-   //       });
-   //    }
-   // });
 };
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -445,7 +465,7 @@ exports.article_delete_post = function(req, res, next){
          res.redirect('/');
       }
    });
-}
+};
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -461,14 +481,20 @@ exports.articles_author_get = function(req, res, next){
    async.parallel({
 
       // get user data
-      user: function(callback){
+      author: function(callback){
          User.findById(req.params.id)
+         .exec(callback);
+      },
+      // get authors
+      authors: function(callback){
+         User.find({ isAuthor:true })
+         .sort({ 'name.last': 'ascending'})
          .exec(callback);
       },
       // get articles by author ID
       articles: function(callback){
          Article.find({author: req.params.id})
-         .populate('authors')
+         .populate('author')
          .populate('comments')
          .sort( {createdAt: -1} )
          .exec(callback);
@@ -483,8 +509,9 @@ exports.articles_author_get = function(req, res, next){
          res.render('authors/', {
             title: 'Articles by ',
             articles: results.articles,
-            author: results.user
+            author: results.author,
+            authors: results.authors
          });
       }
    });
-}
+};
