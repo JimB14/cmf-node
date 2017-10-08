@@ -45,9 +45,6 @@ var port = process.env.PORT || 3050;
 // store express in constant
 var app = express();
 
-// clear database and re-populate
-// seedDB();
-
 // http://mongoosejs.com/docs/connections.html#use-mongo-client
 // connect to db
 // cannot use @ in password (syntax:  mongodb://<dbuser>:<dbpassword>@host:port/dbname)
