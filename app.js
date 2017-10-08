@@ -30,8 +30,6 @@ var User    = require('./models/user');
 var middleware = require('./middleware');
 var funcLibrary = require('./funcLibrary');
 
-// var seedDB  = require('./seeds.js');
-
 // require routes
 var article = require('./routes/articles');
 var comment = require('./routes/comments');
