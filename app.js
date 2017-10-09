@@ -22,9 +22,8 @@ var passportLocalMongoose = require('passport-local-mongoose');
 var config = require('./config');
 
 // require models
-// var Article = require('./models/article');
 var User    = require('./models/user');
-// var Comment = require('./models/comment');
+
 
 // require middleware
 var middleware = require('./middleware');
