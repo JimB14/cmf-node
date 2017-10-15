@@ -36,7 +36,7 @@ var main    = require('./routes/main');
 
 // CONFIGURATIONS
 // set port for heroku or local machine using environment variable
-var port = process.env.PORT || 3050;
+var port = process.env.PORT || 80;
 
 // store express in constant
 var app = express();
