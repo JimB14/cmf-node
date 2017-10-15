@@ -34,4 +34,20 @@ router.post('/login', login_controller.user_login_post);
 router.get('/logout', login_controller.user_logout_get);
 
 
+
+// * * * Forgot password routes * * * //
+
+/* GET request - displays validate username form */
+router.get('/get-new-password', login_controller.user_validate_get);
+
+/* POST request - validate username exists & send email to username */
+router.post('/get-new-password', login_controller.user_validate_post);
+
+/* GET request - display Create New Password form */
+router.get('/create-new-password/:token', login_controller.user_new_password_get);
+
+/* POST request - create new password for user */
+router.post('/create-new-password/:token', login_controller.user_new_password_post);
+
+
 module.exports = router;

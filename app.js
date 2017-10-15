@@ -24,7 +24,6 @@ var config = require('./config');
 // require models
 var User    = require('./models/user');
 
-
 // require middleware
 var middleware = require('./middleware');
 var funcLibrary = require('./funcLibrary');

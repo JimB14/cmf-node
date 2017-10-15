@@ -78,7 +78,8 @@ exports.user_create_post = function(req, res, next){
    } else {
       // user data okay
 
-      // create new user object (register() will take User object & hash password)
+      // create new user object (register() in passport-local-mongoose will take
+      // User object & hash password)
       User.register(user, req.body.password, function(err, user){
          if(err){
             console.log(err);
@@ -149,6 +150,10 @@ exports.user_create_post = function(req, res, next){
 exports.user_activation_get = function(req, res, next){
 
    console.log(`Token: ${req.params.token}`);
+
+   //  escape & trim param
+   req.sanitize('token').escape();
+   req.sanitize('token').trim();
 
    // get user data from user collection
    User.findOne({ token: req.params.token }, function(err, user){

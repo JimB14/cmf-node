@@ -33,6 +33,8 @@ var UserSchema = new Schema({
          require: true
       },
    },
+   resetPasswordToken: String,
+   resetPasswordExpires: Date,
    isAuthor:
    {
       type: Boolean,

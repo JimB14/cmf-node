@@ -5,19 +5,17 @@
    <div class="row">
 
       <div class="col-md-8 col-sm-8 col-xs-10" style="float:none; margin: 0 auto;">
-         <h1><%= title %></h1>
+         <h1><%=  title %></h1>
 
-         <form method="post" action="/login" class="form-container">
+         <% include ../partials/errors %>
+
+         <form method="post" action="" class="form-container">
             <div class="form-group">
                <label for="username">Email</label>
                <input type="text" class="form-control" name="username"
                   id="username" placeholder="Email / Username"
+                  value="<%= (typeof errors === 'undefined') ? '' : username %>"
                   autofocus>
-            </div>
-            <div class="form-group">
-               <label for="password">Password</label>
-               <input type="text" class="form-control" name="password"
-                  id="password" placeholder="Password">
             </div>
             <div class="form-group">
                <button type="submit" class="btn btn-cmf btn-lg btn-block">
@@ -25,9 +23,6 @@
                </button>
             </div>
          </form>
-
-         <span class="login-view-articles"><a href="/articles">View articles</a></span>
-         <span class="login-forgot-password"><a href="/get-new-password">Forgot password</a></span>
       </div>
 
    </div>

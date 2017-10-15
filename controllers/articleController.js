@@ -297,7 +297,7 @@ exports.article_update_get = function(req, res, next){
          });
       }
    });
-}
+};
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 

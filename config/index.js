@@ -21,8 +21,16 @@ configObj.dbConfig = {
 configObj.uploadConfig = {
    localPath: 'C:/Users/Jim/nodeProjects/cmf-node/public/images/uploaded_images/',
    livePath: '/images/uploaded_images/'
-}
+};
 
+
+configObj.mail = {
+   testWmpAccount: 'test@webmediapartners.com',
+   testWmpPassword: 'Hopehope1!',
+   gmailAccount: 'jim.burns14@gmail.com',
+   gmailPassword: 'Hopehope2@',
+   jimWmpAccount: 'jim.burns@webmediapartners.com'
+};
 
 
 
