@@ -31,10 +31,6 @@ exports.contact_page_get = function(req, res){
 // process contact form
 exports.contact_page_post = function(req, res, next){
 
-   res.send('Connected to contact_page_post in mainController!');
-   return;
-
-
    // validate
    req.checkBody('email', 'Email is required.').notEmpty();
    req.checkBody('email', 'Valid email address is required.').isEmail();
