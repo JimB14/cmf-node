@@ -16,7 +16,10 @@ var funcLibrary = require('../funcLibrary');
 router.get('/about', main_controller.about_page_get);
 
 /* GET request - display contact page */
-router.get('/contact', main_controller.contact_page_get);
+// router.get('/contact', main_controller.contact_page_get);
+router.get('/contact', function(req,  res){
+   res.send('GET request to contact route');
+});
 
 /* POST request - process contact form */
 // router.post('/contact', main_controller.contact_page_post);
