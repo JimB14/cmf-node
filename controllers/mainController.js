@@ -5,6 +5,7 @@
 var expressValidator = require('express-validator');
 var nodemailer       = require('nodemailer');
 var passport         = require("passport");
+var bodyParser = require('body-parser');
 
 // configurations
 var config = require('../config');

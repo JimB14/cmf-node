@@ -1,6 +1,5 @@
 var express    = require('express');
 var router     = express.Router();
-var bodyParser = require('body-parser');
 
 // controllers
 var main_controller = require('../controllers/mainController');
