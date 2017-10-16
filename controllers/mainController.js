@@ -62,6 +62,7 @@ exports.contact_page_post = function(req, res, next){
          lastname: req.body.lastname,
          message: req.body.message
       });
+
    } else {
 
       // create reusable transporter object using the default SMTP transport
