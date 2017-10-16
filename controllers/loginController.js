@@ -7,6 +7,7 @@ var nodemailer       = require('nodemailer');
 var passport         = require("passport");
 
 var async            = require('async');
+
 // crypto is a part of node js not a package
 var crypto           = require('crypto');
 

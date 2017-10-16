@@ -93,7 +93,7 @@ exports.user_create_post = function(req, res, next){
                <h2>Challenge My Faith</h2>
                <h3>Account Validation</h3>
                <p>Thanks ${user.fullname} for registering!</p>
-               <p>To validate your account <a href="http://localhost:3050/registration/${token}">click here.</a></p>
+               <p>To validate your account <a href="http://${req.headers.host}/${token}">click here.</a></p>
                <p>If you have received this message in error or did not register, please delete.</p>
                <p style="color: #666;">End of message.</p>`;
 
