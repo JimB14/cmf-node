@@ -5,7 +5,6 @@
 var expressValidator = require('express-validator');
 var nodemailer       = require('nodemailer');
 var passport         = require("passport");
-var bodyParser = require('body-parser');
 
 // configurations
 var config = require('../config');
@@ -32,6 +31,10 @@ exports.contact_page_get = function(req, res){
 // process contact form
 exports.contact_page_post = function(req, res, next){
 
+   res.send('Connected to contact_page_post in mainController!');
+   return;
+
+   
    // validate
    req.checkBody('email', 'Email is required.').notEmpty();
    req.checkBody('email', 'Valid email address is required.').isEmail();
