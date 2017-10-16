@@ -19,7 +19,10 @@ router.get('/about', main_controller.about_page_get);
 router.get('/contact', main_controller.contact_page_get);
 
 /* POST request - process contact form */
-router.post('/contact', main_controller.contact_page_post);
+// router.post('/contact', main_controller.contact_page_post);
+router.post('/contact', function(req, res){
+   res.send('POST request to contact route');
+});
 
 /* GET request - display article submission page */
 router.get('/article-submission', main_controller.article_submission_page_get);
