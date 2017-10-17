@@ -36,7 +36,11 @@ build/Release
 node_modules/
 jspm_packages/
 
+<<<<<<< HEAD
 # config
+=======
+# Configurations
+>>>>>>> c30e177d86d9701661a9c7657ee935e24dd90b21
 config/
 
 # Typescript v1 declaration files
