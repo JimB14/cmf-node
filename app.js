@@ -39,7 +39,7 @@ var main    = require('./routes/main');
 
 // CONFIGURATIONS
 // set port for heroku or local machine using environment variable
-var port = process.env.PORT || 3050;
+var port = process.env.PORT || 80;
 
 // store express in constant
 var app = express();
@@ -47,8 +47,8 @@ var app = express();
 // http://mongoosejs.com/docs/connections.html#use-mongo-client
 // connect to db
 // cannot use @ in password (syntax:  mongodb://<dbuser>:<dbpassword>@host:port/dbname)
-var url = `mongodb://${config.dbConfig.username}:${config.dbConfig.password}@${config.dbConfig.host}/${config.dbConfig.dbname}`;
-// var url = 'mongodb://jburns14:Hopehope1!@localhost/cmf';
+// var url = `mongodb://${config.dbConfig.username}:${config.dbConfig.password}@${config.dbConfig.host}/${config.dbConfig.dbname}`;
+var url = 'mongodb://localhost/cmf';
 mongoose.connect(url);
 var db = mongoose.connection;
 
