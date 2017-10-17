@@ -48,7 +48,7 @@ var app = express();
 // connect to db
 // cannot use @ in password (syntax:  mongodb://<dbuser>:<dbpassword>@host:port/dbname)
 // var url = `mongodb://${config.dbConfig.username}:${config.dbConfigMlab.password}@${config.dbConfig.host}:${config.dbConfig.port}/${config.dbConfig.dbname}`;
-var url = `mongodb://jburns14:Hopehope1!@localhost/cmf`;
+var url = `mongodb://${config.username}:${config.password}@${config.host}/${config.dbname}`;
 mongoose.connect(url);
 var db = mongoose.connection;
 
