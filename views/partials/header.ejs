@@ -71,16 +71,18 @@
 
 <!-- - - - - - - Error & Success Flash Messages - - - - - - - - - -->
 <div class="container text-center mt01em">
-   <div class="col-md-12" style="float:none; margin: 0 auto;">
-      <% if(error && error.length > 0){ %>
-         <div class="alert alert-danger" role="alert">
-           <%- error %>
-         </div>
-      <% } %>
-      <% if(success && success.length > 0){ %>
-         <div class="alert alert-success" role="alert">
-           <%- success %>
-         </div>
-      <% } %>
-   </div>
+   <div class="row">
+      <div class="col-md-12" style="float:none; margin: 0 auto;">
+         <% if(error && error.length > 0){ %>
+            <div class="alert alert-danger" role="alert">
+              <%- error %>
+            </div>
+         <% } %>
+         <% if(success && success.length > 0){ %>
+            <div class="alert alert-success" role="alert">
+              <%- success %>
+            </div>
+         <% } %>
+      </div>
+   </div>   
 </div>
