@@ -1,3 +1,6 @@
+// https://stackoverflow.com/questions/37247474/es6-in-jshint-jshintrc-has-esversion-but-still-getting-warning-using-atom
+/*jshint esversion: 6 */
+
 // dependencies
 var express           = require('express');
 var fileUpload        = require('express-fileupload');
@@ -45,7 +48,7 @@ var app = express();
 // connect to db
 // cannot use @ in password (syntax:  mongodb://<dbuser>:<dbpassword>@host:port/dbname)
 // var url = `mongodb://${config.dbConfig.username}:${config.dbConfigMlab.password}@${config.dbConfig.host}:${config.dbConfig.port}/${config.dbConfig.dbname}`;
-var url = 'mongodb://localhost/cmf';
+var url = `mongodb://jburns14:Hopehope1!@localhost/cmf`;
 mongoose.connect(url);
 var db = mongoose.connection;
 

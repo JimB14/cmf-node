@@ -12,7 +12,7 @@ configObj.dbConfigMlab = {
 
 configObj.dbConfig = {
    username: 'jburns14',
-   password: 'Pa$$w0rd1!',
+   password: 'Hopehope1!',
    host: 'localhost',
    dbname: 'cmf'
 };
