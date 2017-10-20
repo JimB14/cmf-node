@@ -102,7 +102,7 @@ exports.user_validate_post = function(req, res, next){
             User.findOne( { username: req.body.username }, function(err, user){
                if(!user) {
                   req.flash('error', 'No account with that email exists.');
-                  return res.redirect('/login/validate-user');
+                  return res.redirect('/login');
                }
 
                user.resetPasswordToken = token;
