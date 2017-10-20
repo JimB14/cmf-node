@@ -105,7 +105,8 @@ exports.user_create_post = function(req, res, next){
                auth: {
                   user: 'test@webmediapartners.com', // generated ethereal user
                   pass: 'Hopehope1!'  // generated ethereal password
-               },
+               }
+               //,
                // required if using from local machine; remove or set to 'true' when you go live!
                // tls:{
                //    rejectUnauthorized: true
