@@ -107,9 +107,9 @@ exports.user_create_post = function(req, res, next){
                   pass: 'Hopehope1!'  // generated ethereal password
                },
                // required if using from local machine; remove or set to 'true' when you go live!
-               tls:{
-                  rejectUnauthorized: true
-               }
+               // tls:{
+               //    rejectUnauthorized: true
+               // }
             });
 
             // setup email data with unicode symbols
