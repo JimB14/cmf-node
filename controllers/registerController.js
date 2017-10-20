@@ -28,9 +28,6 @@ exports.user_create_get = function(req, res, next){
 // handle user create on POST
 exports.user_create_post = function(req, res, next){
 
-   res.send('connected to user_create_post in registerController!');
-   return;
-   
    // validate data
    req.checkBody('username', 'Email is required.').notEmpty();  // email
    req.checkBody('username', 'Valid email is required.').isEmail();
