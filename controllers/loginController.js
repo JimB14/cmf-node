@@ -41,7 +41,7 @@ exports.user_login_post = passport.authenticate("local",
 
 
 // log out user ( logout() destroys session )
-exports.user_logout_get = function (req, res, next){
+exports.user_logout_get = function (req, res){
    req.logout();
    req.flash('success', 'You have been logged out.');
    res.redirect('/');
@@ -50,7 +50,7 @@ exports.user_logout_get = function (req, res, next){
 
 
 // display get new password form
-exports.user_validate_get = function(req, res, next){
+exports.user_validate_get = function(req, res){
    // render form
    res.render('login/validate-user', {
       title: "Get New Password "
@@ -60,7 +60,7 @@ exports.user_validate_get = function(req, res, next){
 
 
 // process create new password
-exports.user_validate_post = function(req, res, next){
+exports.user_validate_post = function(req, res){
 
    // validate
    req.checkBody('username', 'Email is required.').notEmpty();

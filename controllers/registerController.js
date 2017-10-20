@@ -108,7 +108,7 @@ exports.user_create_post = function(req, res, next){
                },
                // required if using from local machine; remove or set to 'true' when you go live!
                tls:{
-                  rejectUnauthorized: false
+                  rejectUnauthorized: true
                }
             });
 
