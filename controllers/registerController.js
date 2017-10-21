@@ -118,10 +118,8 @@ exports.user_create_post = function(req, res, next){
                port: 587,
                secure: false, // true for 465 (SSL), false for other ports
                auth: {
-                  user: 'test@webmediapartners.com',
-                  pass: '654cba'
-                  // user: config.mail.testWmpAccount,  // email account
-                  // pass: config.mail.testWmpPassword  // password
+                  user: config.mail.testWmpAccount,  // email account
+                  pass: config.mail.testWmpPassword  // password
                },
                // true for live server, false for local machine
                tls: {
