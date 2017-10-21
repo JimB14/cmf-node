@@ -60,7 +60,7 @@ exports.user_validate_get = function(req, res){
 
 
 // process create new password
-exports.user_validate_post = function(req, res){
+exports.user_validate_post = function(req, res, next){
 
    // validate
    req.checkBody('username', 'Email is required.').notEmpty();
@@ -158,7 +158,7 @@ exports.user_validate_post = function(req, res){
             transporter.sendMail(mailOptions, function(err) {
 
                if(err){
-                  return res.send('Unable to send confirmation email.');
+                  return res.send('Unable to send confirmation email to ' + user.username);
                }
 
                console.log('Message successfully sent');
