@@ -120,17 +120,13 @@ exports.user_create_post = function(req, res, next){
                auth: {
                   user: 'test@webmediapartners.com', // generated ethereal user
                   pass: 'Hopehope1!'  // generated ethereal password
-               },
-               // required if using from local machine; remove or set to 'true' when you go live!
-               tls:{
-                  rejectUnauthorized: true
                }
             });
 
             // setup email data with unicode symbols
             let mailOptions = {
                from: '"CMF" <test@webmediapartners.com>', // sender address
-               to: user.username, // list of receivers
+               to: 'jim.burns14@gmail.com', // list of receivers
                // bcc: 'jim.burns@webmediapartners.com',
                subject: 'Registration', // Subject line
                // text: 'Hello world?', // plain text body
@@ -140,7 +136,8 @@ exports.user_create_post = function(req, res, next){
             // send mail with defined transport object
             transporter.sendMail(mailOptions, function(error, info) {
                if (error) {
-                  return console.log(error);
+                  console.log(error);
+                  return res.send('Error sending confirmation email.');
                }
                console.log('Message sent: %s', info.messageId);
 
