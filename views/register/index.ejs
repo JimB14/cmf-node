@@ -7,7 +7,9 @@
       <div class="col-md-8 col-sm-8 col-xs-10" style="float:none; margin: 0 auto;">
          <h1><%= title %></h1>
 
-         <form method="post" action="" class="form-container">
+         <% include ../partials/errors %>
+
+         <form method="post" action="/register/" class="form-container">
             <div class="form-group">
                <label for="username">Email</label>
                <input type="text" class="form-control" name="username"

@@ -28,6 +28,10 @@ exports.user_create_get = function(req, res, next){
 // handle user create on POST
 exports.user_create_post = function(req, res, next){
 
+   console.log('you reached user_create_post!');
+   console.log(req.body.username);
+   // return;
+
    // validate data
    req.checkBody('username', 'Email is required.').notEmpty();  // email
    req.checkBody('username', 'Valid email is required.').isEmail();
@@ -52,13 +56,11 @@ exports.user_create_post = function(req, res, next){
    req.sanitize('password').trim();
    req.sanitize('password2').trim();
 
-   // check for errors
-   var errors = req.validationErrors();
 
    // generate token
    var token = funcLibrary.randomString(72);
 
-   console.log(token);
+   console.log(`TOKEN: \n${token}`);
 
    // create new user
    var user = new User({
@@ -68,8 +70,19 @@ exports.user_create_post = function(req, res, next){
       token: token
    });
 
+   console.log(`USER: \n${user}}`);
+   // return;
+
+   // check for errors
+   var errors = req.validationErrors();
+
+   console.log('ERRORS:');
+   console.log(errors);
+   // return;
+
    // check if empty
    if(errors){
+      // re-render register form
       res.render('register/', {
          title: 'Register',
          errors: errors,
@@ -85,7 +98,9 @@ exports.user_create_post = function(req, res, next){
             console.log(err);
             return res.send(err.message);
          } else {
+
             console.log(`New USER: ${user}`);
+            // return res.send('Script stopped');
 
             // - - - nodemailer - - - - - - - - - - - - - - - - - - - - - - - //
             // send email to user verify account with link
@@ -105,12 +120,11 @@ exports.user_create_post = function(req, res, next){
                auth: {
                   user: 'test@webmediapartners.com', // generated ethereal user
                   pass: 'Hopehope1!'  // generated ethereal password
-               }
-               //,
+               },
                // required if using from local machine; remove or set to 'true' when you go live!
-               // tls:{
-               //    rejectUnauthorized: true
-               // }
+               tls:{
+                  rejectUnauthorized: true
+               }
             });
 
             // setup email data with unicode symbols
