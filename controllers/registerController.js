@@ -115,17 +115,16 @@ exports.user_create_post = function(req, res, next){
             // create reusable transporter object using the default SMTP transport
             let transporter = nodemailer.createTransport({
                host: 'mail.webmediapartners.com',
-               port: 587,
+               port: 25,
                secure: false, // true for 465 (SSL), false for other ports
                auth: {
                   user: 'test@webmediapartners.com', // generated ethereal user
                   pass: 'Hopehope1!'  // generated ethereal password
-               }
-               // ,
+               },
                // true for live server, false for local machine
-               // tls: {
-                  // rejectUnauthorized: true
-               // }
+               tls: {
+                  rejectUnauthorized: true
+               }
             });
 
             // setup email data with unicode symbols
