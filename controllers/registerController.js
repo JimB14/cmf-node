@@ -120,11 +120,12 @@ exports.user_create_post = function(req, res, next){
                auth: {
                   user: 'test@webmediapartners.com', // generated ethereal user
                   pass: 'Hopehope1!'  // generated ethereal password
-               },
-               // true for live server, false for local machine
-               tls: {
-                  rejectUnauthorized: true
                }
+               // ,
+               // true for live server, false for local machine
+               // tls: {
+                  // rejectUnauthorized: true
+               // }
             });
 
             // setup email data with unicode symbols
