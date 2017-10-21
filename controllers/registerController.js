@@ -113,7 +113,7 @@ exports.user_create_post = function(req, res, next){
                <p style="color: #666;">End of message.</p>`;
 
             // create reusable transporter object using the default SMTP transport
-            let transporter = nodemailer.createTransport({
+            var transporter = nodemailer.createTransport({
                host: 'mail.webmediapartners.com',
                port: 587,
                secure: false, // true for 465 (SSL), false for other ports
@@ -128,7 +128,7 @@ exports.user_create_post = function(req, res, next){
             });
 
             // setup email data with unicode symbols
-            let mailOptions = {
+            var mailOptions = {
                from: `"CMF" <${config.mail.testWmpAccount}>`,  // sender address
                to: user.username, // list of receivers
                // bcc: 'name@domain.com',

@@ -125,7 +125,7 @@ exports.user_validate_post = function(req, res){
                   user: config.mail.testWmpAccount,  // email account
                   pass: config.mail.testWmpPassword  // password
                },
-               // required if using from local machine; remove or set to 'true' when you go live!
+               // do not fail on invalid certs
                tls:{
                   rejectUnauthorized: false
                }
@@ -146,8 +146,8 @@ exports.user_validate_post = function(req, res){
 
             // setup email data with unicode symbols
             var mailOptions = {
-               to: user.username,
-               from: `"CMF" ${config.mail.testWmpAccount}`, // reply to address                                             // list of receivers
+               to: user.username,   // list of receivers
+               from: `"CMF" <${config.mail.testWmpAccount}>`, // reply to address
                // bcc: config.mail.jimWmpAccount,
                subject: 'Create new password', // Subject line
                // text: 'Hello world?', // plain text body
