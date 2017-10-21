@@ -157,6 +157,10 @@ exports.user_validate_post = function(req, res){
             // send mail with defined transport object
             smtpTransport.sendMail(mailOptions, function(err) {
 
+               if(err){
+                  return res.send('Unable to send confirmation email.');
+               }
+
                console.log('Message successfully sent');
 
                // success message
