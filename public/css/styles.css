@@ -27,6 +27,10 @@ body {
 /* end sticky footer styles
 -------------------------------------------------- */
 
+.brand-brown {
+   color: #9d6939;
+}
+
 .footer a:hover {
    color: #fff;
    cursor: pointer;
@@ -167,9 +171,8 @@ p {
 @media only screen and (max-width: 768px) {
    .navbar-default .navbar-collapse {
       background-color: #fff;
-      margin-top: 15px;
-      z-index: 100;
-    }
+      margin-top: 35px;
+   }
     .navbar-nav {
       margin-top: 20px;
    }
@@ -183,7 +186,7 @@ p {
       border-bottom: 1px solid #ddd;
    }
    .navbar-nav li a:hover {
-      color: #ff0000 !important;
+      color: #9d6939 !important;
    }
 
 }
