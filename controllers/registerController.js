@@ -120,11 +120,12 @@ exports.user_create_post = function(req, res, next){
                auth: {
                   user: config.mail.testWmpAccount,  // email account
                   pass: config.mail.testWmpPassword  // password
-               },
-               // true for live server, false for local machine
-               tls: {
-                  rejectUnauthorized: false
                }
+               // ,
+               // do not fail on invalid certs
+               // tls: {
+                  // rejectUnauthorized: false
+               // }
             });
 
             // setup email data with unicode symbols
