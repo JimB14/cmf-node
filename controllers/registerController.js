@@ -103,7 +103,7 @@ exports.user_create_post = function(req, res, next){
             // return res.send('Script stopped');
 
             // - - - nodemailer - - - - - - - - - - - - - - - - - - - - - - - //
-            // send email to user verify account with link
+            // send email to user to verify account with link
             const output = `
                <h2>Challenge My Faith</h2>
                <h3>Account Validation</h3>
@@ -130,7 +130,7 @@ exports.user_create_post = function(req, res, next){
             // setup email data with unicode symbols
             let mailOptions = {
                from: '"CMF" <test@webmediapartners.com>', // sender address
-               to: 'jim.burns14@gmail.com', // list of receivers
+               to: user.username, // list of receivers
                // bcc: 'jim.burns@webmediapartners.com',
                subject: 'Registration', // Subject line
                // text: 'Hello world?', // plain text body
@@ -141,7 +141,7 @@ exports.user_create_post = function(req, res, next){
             transporter.sendMail(mailOptions, function(error, info) {
                if (error) {
                   console.log(error);
-                  return res.send('Error sending confirmation email.');
+                  return res.send('Error sending confirmation email to: ' + user.username);
                }
                console.log('Message sent: %s', info.messageId);
 
