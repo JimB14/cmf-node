@@ -123,7 +123,7 @@ exports.user_create_post = function(req, res, next){
                },
                // true for live server, false for local machine
                tls: {
-                  rejectUnauthorized: false
+                  rejectUnauthorized: true
                }
             });
 
