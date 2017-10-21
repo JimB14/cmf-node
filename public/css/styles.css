@@ -163,6 +163,33 @@ p {
    margin-left: 5%;
 }
 
+/* navbar */
+@media only screen and (max-width: 768px) {
+   .navbar-default .navbar-collapse {
+      background-color: #fff;
+      margin-top: 15px;
+      z-index: 100;
+    }
+    .navbar-nav {
+      margin-top: 20px;
+   }
+   .navbar-nav li a {
+      font-weight: normal;
+      margin-top: 10px;
+      line-height: 12px;
+      padding: 0;
+      padding-left:10px;
+      padding-bottom: 13px;
+      border-bottom: 1px solid #ddd;
+   }
+   .navbar-nav li a:hover {
+      color: #ff0000 !important;
+   }
+
+}
+
+
+
 /* background color for comments @views/articles/show */
 .show-article-body {
    padding: 0px 20px;
