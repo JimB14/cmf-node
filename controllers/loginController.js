@@ -50,7 +50,7 @@ exports.user_logout_get = function (req, res){
 
 
 // display get new password form
-exports.user_validate_get = function(req, res){
+exports.user_validate_get = function(req, res, next){
    // render form
    res.render('login/validate-user', {
       title: "Get New Password "
@@ -60,7 +60,7 @@ exports.user_validate_get = function(req, res){
 
 
 // process create new password
-exports.user_validate_post = function(req, res){
+exports.user_validate_post = function(req, res, next){
 
    // validate
    req.checkBody('username', 'Email is required.').notEmpty();
@@ -133,6 +133,14 @@ exports.user_validate_post = function(req, res){
                // }
             });
 
+            console.log('created');
+            transporter.sendMail({
+               from: 'xxx@gmail.com',
+                 to: 'xxx@gmail.com',
+                 subject: 'hello world!',
+                 text: 'hello world!'
+            });
+
             // create email body (includes link toroute to create new password)
             // var output = `
             //    <h2>Challenge My Faith</h2>
@@ -147,30 +155,30 @@ exports.user_validate_post = function(req, res){
             // `;
 
             // setup email data with unicode symbols
-            var mailOptions = {
-               // from: `"CMF" ${config.mail.testWmpAccount}`, // reply to address                                             // list of receivers
-               from: `"CMF" ${config.mail.gmailAccount}`, // reply to address
-               to: user.username,
-               // bcc: config.mail.jimWmpAccount,
-               subject: 'Create new password', // Subject line
-               // text: 'Hello world?', // plain text body
-               // html: output // html body
-               html: '<h1>Test</h1>' // html body
-            };
+            // var mailOptions = {
+            //    // from: `"CMF" ${config.mail.testWmpAccount}`, // reply to address                                             // list of receivers
+            //    from: `"CMF" ${config.mail.gmailAccount}`, // reply to address
+            //    to: user.username,
+            //    // bcc: config.mail.jimWmpAccount,
+            //    subject: 'Create new password', // Subject line
+            //    // text: 'Hello world?', // plain text body
+            //    // html: output // html body
+            //    html: '<h1>Test</h1>' // html body
+            // };
 
             // send mail with defined transport object
-            transporter.sendMail(mailOptions, function(err) {
-
-               if(err){
-                  return res.send('Unable to send confirmation email.');
-               }
-
-               console.log('Message successfully sent');
-
-               // success message
-               req.flash('success', 'Success! \n' + user.fullname + ', please check your email, and click the link to create a new password.');
-               done(err, 'done');
-            });
+            // transporter.sendMail(mailOptions, function(err) {
+            //
+            //    if(err){
+            //       return res.send('Unable to send confirmation email.');
+            //    }
+            //
+            //    console.log('Message successfully sent');
+            //
+            //    // success message
+            //    req.flash('success', 'Success! \n' + user.fullname + ', please check your email, and click the link to create a new password.');
+            //    done(err, 'done');
+            // });
          }
       ], function(err){
          if(err) return next(err);
