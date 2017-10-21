@@ -50,7 +50,7 @@ exports.user_logout_get = function (req, res){
 
 
 // display get new password form
-exports.user_validate_get = function(req, res, next){
+exports.user_validate_get = function(req, res){
    // render form
    res.render('login/validate-user', {
       title: "Get New Password "
@@ -60,7 +60,7 @@ exports.user_validate_get = function(req, res, next){
 
 
 // process create new password
-exports.user_validate_post = function(req, res, next){
+exports.user_validate_post = function(req, res){
 
    // validate
    req.checkBody('username', 'Email is required.').notEmpty();
@@ -118,67 +118,55 @@ exports.user_validate_post = function(req, res, next){
 
             // create reusable transporter object using the default SMTP transport
             var transporter = nodemailer.createTransport({
-               // host: 'mail.webmediapartners.com',
-               // port: 587,
-               // secure: false, // true for 465 (SSL), false for other ports
-               service: 'Gmail',
+               host: 'mail.webmediapartners.com',
+               port: 587,
+               secure: false, // true for 465 (SSL), false for other ports
                auth: {
-                  user: config.mail.gmailAccount, // generated ethereal user
-                  pass: config.mail.gmailPassword  // generated ethereal password
-               }
-               // ,
+                  user: config.mail.testWmpAccount,  // email account
+                  pass: config.mail.testWmpPassword  // password
+               },
                // required if using from local machine; remove or set to 'true' when you go live!
-               // tls:{
-                  // rejectUnauthorized: false
-               // }
-            });
-
-            console.log('created');
-            transporter.sendMail({
-               from: 'xxx@gmail.com',
-                 to: 'xxx@gmail.com',
-                 subject: 'hello world!',
-                 text: 'hello world!'
+               tls:{
+                  rejectUnauthorized: false
+               }
             });
 
             // create email body (includes link toroute to create new password)
-            // var output = `
-            //    <h2>Challenge My Faith</h2>
-            //    <p>Hi ${user.fullname},</p>
-            //    <p>A request was made to create a new password for your account.</p>
-            //    <p>To create a new password <a href="http://${req.headers.host}/create-new-password/${token}">click here.</a></p>
-            //    <p>The link expires in one hour.</p>
-            //    <p>If you did not make this request, please ignore and delete this email.</p>
-            //    <p>Thank you,</p>
-            //    <p>ChallengeMyFaith.com</p>
-            //    <p style="color: #666;">End of message.</p>
-            // `;
+            var output = `
+               <h2>Challenge My Faith</h2>
+               <p>Hi ${user.fullname},</p>
+               <p>A request was made to create a new password for your account.</p>
+               <p>To create a new password <a href="http://${req.headers.host}/create-new-password/${token}">click here.</a></p>
+               <p>The link expires in one hour.</p>
+               <p>If you did not make this request, please ignore and delete this email.</p>
+               <p>Thank you,</p>
+               <p>ChallengeMyFaith.com</p>
+               <p style="color: #666;">End of message.</p>
+            `;
 
             // setup email data with unicode symbols
-            // var mailOptions = {
-            //    // from: `"CMF" ${config.mail.testWmpAccount}`, // reply to address                                             // list of receivers
-            //    from: `"CMF" ${config.mail.gmailAccount}`, // reply to address
-            //    to: user.username,
-            //    // bcc: config.mail.jimWmpAccount,
-            //    subject: 'Create new password', // Subject line
-            //    // text: 'Hello world?', // plain text body
-            //    // html: output // html body
-            //    html: '<h1>Test</h1>' // html body
-            // };
+            var mailOptions = {
+               to: user.username,
+               from: `"CMF" ${config.mail.testWmpAccount}`, // reply to address                                             // list of receivers
+               // bcc: config.mail.jimWmpAccount,
+               subject: 'Create new password', // Subject line
+               // text: 'Hello world?', // plain text body
+               html: output // html body
+            };
 
             // send mail with defined transport object
-            // transporter.sendMail(mailOptions, function(err) {
-            //
-            //    if(err){
-            //       return res.send('Unable to send confirmation email.');
-            //    }
-            //
-            //    console.log('Message successfully sent');
-            //
-            //    // success message
-            //    req.flash('success', 'Success! \n' + user.fullname + ', please check your email, and click the link to create a new password.');
-            //    done(err, 'done');
-            // });
+            transporter.sendMail(mailOptions, function(err) {
+
+               if(err){
+                  return res.send('Unable to send confirmation email.');
+               }
+
+               console.log('Message successfully sent');
+
+               // success message
+               req.flash('success', 'Success! \n' + user.fullname + ', please check your email, and click the link to create a new password.');
+               done(err, 'done');
+            });
          }
       ], function(err){
          if(err) return next(err);
