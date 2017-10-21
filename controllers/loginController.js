@@ -117,7 +117,7 @@ exports.user_validate_post = function(req, res){
          function(token, user, done){
 
             // create reusable transporter object using the default SMTP transport
-            var smtpTransport = nodemailer.createTransport({
+            var transporter = nodemailer.createTransport({
                host: 'mail.webmediapartners.com',
                port: 587,
                secure: false, // true for 465 (SSL), false for other ports
@@ -155,7 +155,7 @@ exports.user_validate_post = function(req, res){
             };
 
             // send mail with defined transport object
-            smtpTransport.sendMail(mailOptions, function(err) {
+            transporter.sendMail(mailOptions, function(err) {
 
                if(err){
                   return res.send('Unable to send confirmation email.');
