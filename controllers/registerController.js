@@ -115,7 +115,7 @@ exports.user_create_post = function(req, res, next){
             // create reusable transporter object using the default SMTP transport
             let transporter = nodemailer.createTransport({
                host: 'mail.webmediapartners.com',
-               port: 25,
+               port: 587,
                secure: false, // true for 465 (SSL), false for other ports
                auth: {
                   user: 'test@webmediapartners.com', // generated ethereal user
@@ -131,7 +131,7 @@ exports.user_create_post = function(req, res, next){
             let mailOptions = {
                from: '"CMF" <test@webmediapartners.com>', // sender address
                to: user.username, // list of receivers
-               // bcc: 'jim.burns@webmediapartners.com',
+               // bcc: 'name@domain.com',
                subject: 'Registration', // Subject line
                // text: 'Hello world?', // plain text body
                html: output // html body
@@ -146,12 +146,7 @@ exports.user_create_post = function(req, res, next){
                console.log('Message sent: %s', info.messageId);
 
                // send flash message
-
-               // live server
                req.flash('success', 'Success! Welcome ' + user.fullname + '! Please check your email, and click the link to complete your registration.');
-
-               // local server
-               // req.flash('success', 'Success! Welcome ' + user.name + '! <br><a href=/registration/' + token + '>Click here to complete your registration.</a>');
 
                // redirect to home page
                res.redirect('/');
