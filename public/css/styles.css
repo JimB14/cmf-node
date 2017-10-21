@@ -188,6 +188,11 @@ p {
    .navbar-nav li a:hover {
       color: #9d6939 !important;
    }
+   .navbar-toggle {
+      background-color: #9d6939;
+      margin-top: 20px;
+   }
+   .icon-bar {background-color: #fff !important;}
 
 }
 
