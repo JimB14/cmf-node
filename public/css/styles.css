@@ -168,7 +168,7 @@ p {
 }
 
 /* navbar */
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
    .navbar-default .navbar-collapse {
       background-color: #fff;
       margin-top: 35px;
